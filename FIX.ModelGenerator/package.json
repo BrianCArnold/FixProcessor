@@ -1,0 +1,25 @@
+{
+  "name": "fix.modelgenerator",
+  "version": "0.0.1",
+  "description": "Generate Models for FIX Processor",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  }, 
+  "files": [
+    "dist/*",
+    "package.json",
+    "bin"
+  ],
+  "author": "Brian C. Arnold",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^16.0.0"
+  },
+  "devDependencies": {
+    "puppeteer-tsd": "^0.0.2",
+    "typescript": "^4.7.4"
+  }
+}

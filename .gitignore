@@ -4,7 +4,7 @@
 .vs
 
 # Project-specific
-DemoClient/**
+
 
 # User-specific files
 *.suo
@@ -182,6 +182,11 @@ FakesAssemblies/
 
 # NuGet Packages Folder
 packages/
+
+#npm
+
+FIX.ModelGenerator/node_modules/**
+FIX.ModelGenerator/dist/**
 
 # dotnet tools
 .store
