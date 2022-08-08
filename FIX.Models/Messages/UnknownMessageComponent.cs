@@ -5,7 +5,7 @@ namespace FIX.Models
         public IEnumerable<ValidityMessage> GetStatus()
             => Enumerable.Empty<ValidityMessage>();
         Dictionary<uint, FixData> CustomFields { get; set; } = new Dictionary<uint, FixData>();
-        public IEnumerable<ValidityMessage> PopulateMessageFields(FixStreamFieldQueue fields)
+        public IEnumerable<ValidityMessage> PopulateMessageFields(FixStreamFieldQueue fields, MessageParserOptions options)
         {
             
             while (fields.Fields.Peek().FieldNumber != 10)

@@ -1,9 +1,11 @@
+using System;
+using System.Reactive.Subjects;
 using System.Text;
 using FIX.Models;
 
 namespace FIX.Processor;
 
-public static class ProcessFile
+public static class ProcessStream
 {
     public static IEnumerable<Stream> FileMessageStream(Options options)
     {
@@ -19,6 +21,7 @@ public static class ProcessFile
             string line = fileStream.ReadLine();
             byte[] messageBytes = Encoding.UTF8.GetBytes(line);
             yield return new MemoryStream(messageBytes);
+            Thread.Sleep(options.WaitTime);
         }
     }
     public static IEnumerable<Stream> ConsoleMessageStream(Options options)
@@ -31,12 +34,21 @@ public static class ProcessFile
                 break;
             byte[] messageBytes = Encoding.UTF8.GetBytes(line);
             yield return new MemoryStream(messageBytes);
+            Thread.Sleep(options.WaitTime);
         }
     }
-    public static void Execute(Options options)
+    public static int Execute(Options options)
     {
+        MessageParserOptions parserOptions = new MessageParserOptions
+        {
+            TreatDelimiterAsSOHForChecksum = options.TreatDelimiterAsSOHForChecksum,
+            Delimiter = options.Delimiter,
+            DisableChecksum = options.DisableChecksum,
+            DisableSequenceCheck = options.DisableSequenceCheck,
+            HideErrors = options.HideErrors
+        };
 
-        var messageParser = new FixMessageParser();
+        var messageParser = new FixMessageParser(parserOptions);
 
         ConsoleColor defColor = Console.ForegroundColor;
 
@@ -51,45 +63,81 @@ public static class ProcessFile
             messageStreamEnumerable = FileMessageStream(options);
         }
         int messageNum = 0;
+        Dictionary<string, ICollection<decimal>> accountPrices = new Dictionary<string, ICollection<decimal>>();
+        List<FixMessage> messages = new List<FixMessage>();
+        int errCount = 0;
         foreach (var messageStream in messageStreamEnumerable)
         {
             messageNum++;
-            Console.WriteLine($"Processing message #{messageNum}");
-            var message = messageParser.ParseFixMessage(messageStream, options.Delimiter, options.TreatDelimiterAsSOHForChecksum);
+            if (options.Verbose)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Processing message #{messageNum}");
+                Console.ForegroundColor = defColor;
+            }
+            var message = messageParser.ParseFixMessage(messageStream);
+
+            if (!message.ValidityMessages.Any(m => m.Level == MessageLevel.Error))
+            {//No errors, it counts.
+
+                messages.Add(message);
+                if (message.Body is NewOrderSingleMessage orderSingleMessage)
+                {
+                    if (!accountPrices.ContainsKey(orderSingleMessage.Account))
+                    {
+                        accountPrices[orderSingleMessage.Account] = new List<decimal>();
+                    }
+                    accountPrices[orderSingleMessage.Account].Add(orderSingleMessage.Price);
+                    
+                }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Out  .WriteLine($"Successfully Processed message #{messageNum}, MessageType: {message.Header.MsgType.Value}, SeqNum: {message.Header.MsgSeqNum.Value}");
+
+            }
+            else
+            {
+                errCount++;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Error.WriteLine($"Error(s) in Processing message #{messageNum}, MessageType: {message.Header.MsgType.Value}, SeqNum: {message.Header.MsgSeqNum.Value}");
+            }
             foreach (var parsingMessage in message.ValidityMessages)
             {
                 switch (parsingMessage.Level)
                 {
                     case MessageLevel.Error:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("  " + parsingMessage);
+                        if (!options.HideErrors)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Error.WriteLine("  " + parsingMessage.Message);
+                        }
                         break;
                     case MessageLevel.Warning:
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("  " + parsingMessage);
+                        if (!options.HideErrors)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Error.WriteLine("  " + parsingMessage.Message);
+                        }
                         break;
                     case MessageLevel.Info:
                         if (options.Verbose)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("  " + parsingMessage);
+                            Console.WriteLine("  " + parsingMessage.Message);
                         }
                         break;
                 }
                 Console.ForegroundColor = defColor;
             }
-            if (!message.ValidityMessages.Any(m => m.Level == MessageLevel.Error))
-            {//No errors, it counts.
-                Console.WriteLine($"Processed message #{messageNum} with Seq: {message.Header.MsgSeqNum.Value}");
-
-            }
-            else
-            {
-                Console.WriteLine($"Unable to process message #{messageNum} with Seq: {message.Header.MsgSeqNum.Value}, see above for details.");
-
-            }
+            Console.ForegroundColor = defColor;
 
         }
-        
+        foreach (var key in accountPrices.Keys)
+        {
+            var min = accountPrices[key].Min();
+            var max = accountPrices[key].Max();
+            Console.WriteLine($"Account: {key}, Min: {min}, Max: {max}");
+        }
+        return errCount;
     }
+    
 }

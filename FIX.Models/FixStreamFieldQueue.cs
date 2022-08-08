@@ -9,10 +9,9 @@ public class FixStreamFieldQueue : IDisposable
 
     public Queue<FixField> Fields { get; private set; }
 
-    public FixStreamFieldQueue(Stream strm, char delimiter, bool treatDelimiterAsSOHForChecksum)
+    public FixStreamFieldQueue(Stream strm, MessageParserOptions options)
     {
-        SOHChar = delimiter;
-        this.treatDelimiterAsSOHForChecksum = treatDelimiterAsSOHForChecksum;
+        this.options = options ?? new MessageParserOptions();
         fixStream = new MemoryStream();
         strm.CopyTo(fixStream);
         fixStream.Position = 0;
@@ -47,9 +46,9 @@ public class FixStreamFieldQueue : IDisposable
         IEnumerable<byte> bytes = InternalReadUntilSOH();
         return bytes.ToArray();
     }
-
-    private readonly char SOHChar;
-    private readonly bool treatDelimiterAsSOHForChecksum;
+    private readonly MessageParserOptions options;
+    private char SOHChar => options.Delimiter;
+    private bool treatDelimiterAsSOHForChecksum => options.TreatDelimiterAsSOHForChecksum;
 
     private IEnumerable<FixField> IterateStream()
     {

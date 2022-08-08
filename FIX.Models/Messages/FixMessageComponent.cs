@@ -50,7 +50,7 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
         }
         return TypeRequiredProperties[type];
     }
-    public virtual IEnumerable<ValidityMessage> PopulateMessageFields(FixStreamFieldQueue fields)
+    public virtual IEnumerable<ValidityMessage> PopulateMessageFields(FixStreamFieldQueue fields, MessageParserOptions options)
     {
         var messageProperties = GetProperties(typeof(TMessage));
         var collectionProperties = GetCollectionProperties(typeof(TMessage));
@@ -83,7 +83,7 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
                     for (int i = 0; i < ((FixInt)propertyValue).Value; i++)
                     {
                         var subComponent = (IFixMessageComponent)Activator.CreateInstance(repeatedPart);
-                        foreach (var message in subComponent.PopulateMessageFields(fields))
+                        foreach (var message in subComponent.PopulateMessageFields(fields, options))
                         {
                             yield return message;
                         }
