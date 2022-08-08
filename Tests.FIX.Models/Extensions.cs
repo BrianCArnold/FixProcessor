@@ -1,4 +1,4 @@
-namespace FIX.Models
+namespace Tests.FIX.Models
 {
     public static class Extensions
     {

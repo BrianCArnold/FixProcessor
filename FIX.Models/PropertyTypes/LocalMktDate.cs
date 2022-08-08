@@ -1,6 +1,6 @@
 namespace FIX.Models;
 
-public class LocalMktDate : FixString
+public class LocalMktDate : UTCDateOnly
 {
     public LocalMktDate(byte[] value) : base(value)
     {

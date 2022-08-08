@@ -11,9 +11,11 @@ public class MessageFactoryTests
         byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
 
-        var messageParser = new FixMessageParser();
+        var messageParser = new FixMessageParser(new MessageParserOptions{
+            Delimiter = '\u0001'
+        });
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
+        var fixMessage = messageParser.ParseFixMessage(fixStream);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(20);
@@ -40,9 +42,11 @@ public class MessageFactoryTests
         byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
 
-        var messageParser = new FixMessageParser();
+        var messageParser = new FixMessageParser(new MessageParserOptions{
+            Delimiter = '\u0001'
+        });
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
+        var fixMessage = messageParser.ParseFixMessage(fixStream);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(338);
@@ -69,9 +73,11 @@ public class MessageFactoryTests
         byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
 
-        var messageParser = new FixMessageParser();
+        var messageParser = new FixMessageParser(new MessageParserOptions{
+            Delimiter = '\u0001'
+        });
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
+        var fixMessage = messageParser.ParseFixMessage(fixStream);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(338);
@@ -96,9 +102,11 @@ public class MessageFactoryTests
         byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
 
-        var messageParser = new FixMessageParser();
+        var messageParser = new FixMessageParser(new MessageParserOptions{
+            Delimiter = '\u0001'
+        });
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
+        var fixMessage = messageParser.ParseFixMessage(fixStream);
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
 
     }
@@ -124,13 +132,16 @@ public class MessageFactoryTests
 8=FIX.4.2|9=0151|35=D|34=000000000|1=SPDRT1|11=DB95A6B1070A29C|38=100|40=2|44=256.04|54=1|55=SPY|55=SPY|59=0|60=20181127-16:46:07.996|100=XNYS|9416=A|9303=N|528=A|386=1|336=2|10=027|".ChangeStringToUseSOHChar();
         var messages = srcString.Split(Environment.NewLine);
         ICollection<FixMessage> fixMessages = new List<FixMessage>();
+
+        var messageParser = new FixMessageParser(new MessageParserOptions{
+            Delimiter = '\u0001'
+        });
         foreach (var message in messages)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
             var messageStream = new MemoryStream(messageBytes);
-
-            var messageParser = new FixMessageParser();
-            var parsedMsg = messageParser.ParseFixMessage(messageStream, '\u0001', true);
+            
+            var parsedMsg = messageParser.ParseFixMessage(messageStream);
             fixMessages.Add(parsedMsg);
         }
         fixMessages.Count.Should().Be(17);
@@ -144,9 +155,11 @@ public class MessageFactoryTests
         byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
 
-        var messageParser = new FixMessageParser();
+        var messageParser = new FixMessageParser(new MessageParserOptions{
+            Delimiter = '\u0001'
+        });
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
+        var fixMessage = messageParser.ParseFixMessage(fixStream);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(20);
