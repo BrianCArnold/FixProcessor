@@ -9,9 +9,6 @@ var parseResult = parser.ParseArguments<ProcessOptions>(args);
 
 
 var result = parseResult.MapResult(
-    (ProcessOptions opts) => {
-        var messageMediator = new MessageMediator(opts);
-        return messageMediator.Execute();
-    },
+    (ProcessOptions opts) => new MessageMediator(opts).Execute(),
     errs => 1);
 
