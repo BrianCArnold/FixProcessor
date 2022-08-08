@@ -17,7 +17,6 @@ public class FixMessageParser
                 var hasMessageCode =  t.GetCustomAttribute<MessageCodeAttribute>() != null;
                 return isAssignable && hasMessageCode;
             })
-    
             .ToDictionary(
                 t => t.GetCustomAttribute<MessageCodeAttribute>().MessageCode,
                 t => 
@@ -40,6 +39,7 @@ public class FixMessageParser
         }
         else
         {
+            #warning This may be because the SequenceNumber is associated with a particular sender or reciever?
             processingMessages.Add(new ValidityMessage(MessageLevel.Warning, "Sequence number may be out of order"));
         }
 
@@ -51,6 +51,7 @@ public class FixMessageParser
         else
         {
             body = new UnknownMessageComponent();
+            processingMessages.Insert(0, new ValidityMessage(MessageLevel.Error, $"Unrecognized Message Type ({header.MsgType.Value}) for this version of FIX."));
         }
         processingMessages.AddRange(body.PopulateMessageFields(fieldQueue));
         

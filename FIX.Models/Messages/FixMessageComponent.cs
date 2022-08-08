@@ -61,7 +61,7 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
                 //In child components, we don't emit an error, a repeated value just means that we're repeating the group of fields.
                 if (EmitErrorOnDuplicateField)
                 {
-                    yield return new ValidityMessage(MessageLevel.Error, $"Unexpected duplicate field {fields.Fields.Peek().FieldNumber}");
+                    yield return new ValidityMessage(MessageLevel.Error, $"Unexpected duplicate field {fields.Fields.Peek().FieldNumber} in {typeof(TMessage).Name}");
                 }
                 break;
             }
@@ -105,13 +105,12 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
             }
         }
         var requiredProperties = GetRequiredProperties(typeof(TMessage));
-        foreach (var fieldId in requiredProperties)
+        var missingProperties = requiredProperties.Where(p => !processedFields.Contains(p)).Select(i=> i.ToString());
+        if (missingProperties.Any())
         {
-            if (!processedFields.Contains(fieldId))
-            {
-                yield return new ValidityMessage(MessageLevel.Error, $"Required field {fieldId} is missing.");
-            }
+            yield return new ValidityMessage(MessageLevel.Error, $"Required field(s) ({String.Join(", ", missingProperties)}) missing in {typeof(TMessage).Name}");
         }
+        
     }
 }
 

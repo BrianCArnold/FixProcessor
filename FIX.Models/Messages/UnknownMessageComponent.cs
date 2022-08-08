@@ -7,12 +7,13 @@ namespace FIX.Models
         Dictionary<uint, FixData> CustomFields { get; set; } = new Dictionary<uint, FixData>();
         public IEnumerable<ValidityMessage> PopulateMessageFields(FixStreamFieldQueue fields)
         {
+            
             while (fields.Fields.Peek().FieldNumber != 10)
             {
                 var field = fields.Fields.Dequeue();
                 if (CustomFields.ContainsKey(field.FieldNumber))
                 {
-                    yield return new ValidityMessage(MessageLevel.Error, $"Duplicate field {field.FieldNumber}");
+                    yield return new ValidityMessage(MessageLevel.Error, $"Unexpected duplicate field {fields.Fields.Peek().FieldNumber} in {nameof(UnknownMessageComponent)}");
                 }
                 else
                 {

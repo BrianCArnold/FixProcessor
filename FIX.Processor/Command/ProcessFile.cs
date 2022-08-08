@@ -62,32 +62,33 @@ public static class ProcessFile
                 {
                     case MessageLevel.Error:
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("  Err: " + parsingMessage);
+                        Console.WriteLine("  " + parsingMessage);
                         break;
                     case MessageLevel.Warning:
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("  Warn:" + parsingMessage);
+                        Console.WriteLine("  " + parsingMessage);
                         break;
                     case MessageLevel.Info:
                         if (options.Verbose)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("  Info:" + parsingMessage);
+                            Console.WriteLine("  " + parsingMessage);
                         }
                         break;
                 }
                 Console.ForegroundColor = defColor;
             }
-            if (message.ValidityMessages.Any(m=> m.Level == MessageLevel.Error))
-            {
-                Console.WriteLine($"Unable to process message #{messageNum} with Seq: {message.Header.MsgSeqNum.Value}, see above for details.");
-                
-            }
-            else 
+            if (!message.ValidityMessages.Any(m => m.Level == MessageLevel.Error))
             {//No errors, it counts.
                 Console.WriteLine($"Processed message #{messageNum} with Seq: {message.Header.MsgSeqNum.Value}");
+
             }
-            
+            else
+            {
+                Console.WriteLine($"Unable to process message #{messageNum} with Seq: {message.Header.MsgSeqNum.Value}, see above for details.");
+
+            }
+
         }
         
     }
