@@ -1,2 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using CommandLine;
+using FIX.Models;
+using FIX.Processor;
+
+CommandLine.Parser.Default
+    .ParseArguments<Options>(args)
+    .WithParsed(ProcessFile.Execute);

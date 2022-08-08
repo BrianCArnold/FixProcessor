@@ -4,12 +4,15 @@ namespace FIX.Models;
 
 public class FixStreamFieldQueue : IDisposable
 {
+    
     private readonly MemoryStream fixStream;
 
     public Queue<FixField> Fields { get; private set; }
 
-    public FixStreamFieldQueue(Stream strm)
+    public FixStreamFieldQueue(Stream strm, char delimiter, bool treatDelimiterAsSOHForChecksum)
     {
+        SOHChar = delimiter;
+        this.treatDelimiterAsSOHForChecksum = treatDelimiterAsSOHForChecksum;
         fixStream = new MemoryStream();
         strm.CopyTo(fixStream);
         fixStream.Position = 0;
@@ -45,7 +48,8 @@ public class FixStreamFieldQueue : IDisposable
         return bytes.ToArray();
     }
 
-    private char SOHChar => '\u0001';
+    private readonly char SOHChar;
+    private readonly bool treatDelimiterAsSOHForChecksum;
 
     private IEnumerable<FixField> IterateStream()
     {
@@ -61,7 +65,7 @@ public class FixStreamFieldQueue : IDisposable
                 var field = new FixField(fieldBytes);
                 if (field.FieldNumber != 10)
                 {
-                    checkSum += fieldBytes.Aggregate(0u, (c,n) => c + n) + (ushort)SOHChar;
+                    checkSum += fieldBytes.Aggregate(0u, (c,n) => c + n) + (treatDelimiterAsSOHForChecksum ? 1u : (ushort)SOHChar);
                 }
                 yield return field;
             }

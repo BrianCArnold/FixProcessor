@@ -13,7 +13,7 @@ public class MessageFactoryTests
 
         var messageParser = new FixMessageParser();
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream);
+        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(20);
@@ -42,7 +42,7 @@ public class MessageFactoryTests
 
         var messageParser = new FixMessageParser();
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream);
+        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(338);
@@ -71,7 +71,7 @@ public class MessageFactoryTests
 
         var messageParser = new FixMessageParser();
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream);
+        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(338);
@@ -98,7 +98,7 @@ public class MessageFactoryTests
 
         var messageParser = new FixMessageParser();
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream);
+        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
 
     }
@@ -130,7 +130,7 @@ public class MessageFactoryTests
             var messageStream = new MemoryStream(messageBytes);
 
             var messageParser = new FixMessageParser();
-            var parsedMsg = messageParser.ParseFixMessage(messageStream);
+            var parsedMsg = messageParser.ParseFixMessage(messageStream, '\u0001', true);
             fixMessages.Add(parsedMsg);
         }
         fixMessages.Count.Should().Be(17);
@@ -146,7 +146,7 @@ public class MessageFactoryTests
 
         var messageParser = new FixMessageParser();
 
-        var fixMessage = messageParser.ParseFixMessage(fixStream);
+        var fixMessage = messageParser.ParseFixMessage(fixStream, '\u0001', true);
 
         fixMessage.Header.BeginString.Value.Should().Be("FIX.4.2");
         fixMessage.Header.BodyLength.Value.Should().Be(20);

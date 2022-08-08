@@ -27,13 +27,21 @@ public class FixMessageParser
                     return closure;
                 });
     }
-
-    public FixMessage ParseFixMessage(Stream data)
+    public long LastValidSequenceNumber { get; set; } = long.MinValue;
+    public FixMessage ParseFixMessage(Stream data, char delimiter, bool treatDelimiterAsSOHForChecksum)
     {
         var processingMessages = new List<ValidityMessage>();
-        var fieldQueue = new FixStreamFieldQueue(data);
+        var fieldQueue = new FixStreamFieldQueue(data, delimiter, treatDelimiterAsSOHForChecksum);
         StandardHeader header = new StandardHeader();
         processingMessages.AddRange(header.PopulateMessageFields(fieldQueue));
+        if (header.MsgSeqNum > LastValidSequenceNumber)
+        {
+            LastValidSequenceNumber = header.MsgSeqNum;
+        }
+        else
+        {
+            processingMessages.Add(new ValidityMessage(MessageLevel.Warning, "Sequence number may be out of order"));
+        }
 
         IFixMessageComponent body;
         if (messageConstructors.ContainsKey(header.MsgType.Value))
