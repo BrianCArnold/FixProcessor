@@ -29,7 +29,7 @@ public class MessageFactoryTests
         ((LogonMessage)fixMessage.Body).EncryptMethod.Value.Should().Be(0);
         ((LogonMessage)fixMessage.Body).HeartBtInt.Value.Should().Be(30);
 
-        fixMessage.MessageValid.Should().BeTrue();        
+        fixMessage.ValidityMessages.Count(m=>m.Level == MessageLevel.Error).Should().Be(0);
 
     }
 
@@ -57,7 +57,7 @@ public class MessageFactoryTests
         fixMessage.Body.As<ExecutionReportMessage>().NoContraBrokers.Value.Should().Be(1);
         fixMessage.Body.As<ExecutionReportMessage>().ContraBrokersCollection.LongCount().Should().Be(fixMessage.Body.As<ExecutionReportMessage>().NoContraBrokers.Value);
 
-        fixMessage.MessageValid.Should().BeTrue();        
+        fixMessage.ValidityMessages.Count(m=>m.Level == MessageLevel.Error).Should().Be(0);
 
     }
 
@@ -85,7 +85,7 @@ public class MessageFactoryTests
         var msg = fixMessage.Body.As<ExecutionReportMessage>();
         fixMessage.Body.As<ExecutionReportMessage>().ContraBrokersCollection.LongCount().Should().Be(fixMessage.Body.As<ExecutionReportMessage>().NoContraBrokers);
 
-        fixMessage.MessageValid.Should().BeTrue();        
+        fixMessage.ValidityMessages.Count(m=>m.Level == MessageLevel.Error).Should().Be(0);
 
     }
 

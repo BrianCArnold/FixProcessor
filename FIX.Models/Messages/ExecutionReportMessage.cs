@@ -67,7 +67,8 @@ public class ExecutionReportMessage : FixMessageComponent<ExecutionReportMessage
   public ICollection<ContraBrokersClass> ContraBrokersCollection { get; set; } = new List<ContraBrokersClass>();
   [FieldNumberTarget(382)]
   public class ContraBrokersClass : FixMessageComponent<ContraBrokersClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(375)]
     public FixString ContraBroker { get; set; }
     

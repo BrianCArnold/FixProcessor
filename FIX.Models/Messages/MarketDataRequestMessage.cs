@@ -25,7 +25,8 @@ public class MarketDataRequestMessage : FixMessageComponent<MarketDataRequestMes
   public ICollection<MDEntryTypesClass> MDEntryTypesCollection { get; set; } = new List<MDEntryTypesClass>();
   [FieldNumberTarget(267)]
   public class MDEntryTypesClass : FixMessageComponent<MDEntryTypesClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(269)]    
     [RequiredField]
     public FixChar MDEntryType { get; set; }
@@ -40,7 +41,8 @@ public class MarketDataRequestMessage : FixMessageComponent<MarketDataRequestMes
   public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
   public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(55)]    
     [RequiredField]
     public FixString Symbol { get; set; }

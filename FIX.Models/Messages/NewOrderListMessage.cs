@@ -25,7 +25,8 @@ public class NewOrderListMessage : FixMessageComponent<NewOrderListMessage>
   public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
   public class OrdersClass : FixMessageComponent<OrdersClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(11)]    
     [RequiredField]
     public FixString ClOrdID { get; set; }
@@ -62,7 +63,8 @@ public class NewOrderListMessage : FixMessageComponent<NewOrderListMessage>
     public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
     [FieldNumberTarget(78)]
     public class AllocsClass : FixMessageComponent<AllocsClass>
-    {    
+    {
+      protected override bool EmitErrorOnDuplicateField => false;    
       [FieldNumber(79)]
       public FixString AllocAccount { get; set; }
     
@@ -99,7 +101,8 @@ public class NewOrderListMessage : FixMessageComponent<NewOrderListMessage>
     public ICollection<TradingSessionsClass> TradingSessionsCollection { get; set; } = new List<TradingSessionsClass>();
     [FieldNumberTarget(386)]
     public class TradingSessionsClass : FixMessageComponent<TradingSessionsClass>
-    {    
+    {
+      protected override bool EmitErrorOnDuplicateField => false;    
       [FieldNumber(336)]
       public FixString TradingSessionID { get; set; }
     }

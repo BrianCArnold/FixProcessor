@@ -92,7 +92,8 @@ public class SecurityDefinitionRequestMessage : FixMessageComponent<SecurityDefi
   public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
   public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(311)]
     public FixString UnderlyingSymbol { get; set; }
     

@@ -10,6 +10,6 @@ public class FixString : IFixType
     public string Value => internalValue;
     public static implicit operator string(FixString value)
     {
-        return value.Value;
+        return value?.Value;
     }
 }

@@ -55,7 +55,8 @@ public class OrderCancelReplaceRequestMessage : FixMessageComponent<OrderCancelR
   public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
   [FieldNumberTarget(78)]
   public class AllocsClass : FixMessageComponent<AllocsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(79)]
     public FixString AllocAccount { get; set; }
     
@@ -89,7 +90,8 @@ public class OrderCancelReplaceRequestMessage : FixMessageComponent<OrderCancelR
   public ICollection<TradingSessionsClass> TradingSessionsCollection { get; set; } = new List<TradingSessionsClass>();
   [FieldNumberTarget(386)]
   public class TradingSessionsClass : FixMessageComponent<TradingSessionsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(336)]
     public FixString TradingSessionID { get; set; }
   }

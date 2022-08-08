@@ -104,7 +104,8 @@ public class IndicationofInterestMessage : FixMessageComponent<IndicationofInter
   public ICollection<IOIQualifiersClass> IOIQualifiersCollection { get; set; } = new List<IOIQualifiersClass>();
   [FieldNumberTarget(199)]
   public class IOIQualifiersClass : FixMessageComponent<IOIQualifiersClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(104)]
     public FixChar IOIQualifier { get; set; }
   }
@@ -132,7 +133,8 @@ public class IndicationofInterestMessage : FixMessageComponent<IndicationofInter
   public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
   [FieldNumberTarget(215)]
   public class RoutingIDsClass : FixMessageComponent<RoutingIDsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(216)]
     public FixInt RoutingType { get; set; }
     

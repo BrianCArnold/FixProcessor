@@ -13,7 +13,8 @@ public class BidResponseMessage : FixMessageComponent<BidResponseMessage>
   public ICollection<BidComponentsClass> BidComponentsCollection { get; set; } = new List<BidComponentsClass>();
   [FieldNumberTarget(420)]
   public class BidComponentsClass : FixMessageComponent<BidComponentsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(12)]    
     [RequiredField]
     public Amt Commission { get; set; }

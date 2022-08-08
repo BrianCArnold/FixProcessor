@@ -37,7 +37,8 @@ public class ListStatusMessage : FixMessageComponent<ListStatusMessage>
   public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
   public class OrdersClass : FixMessageComponent<OrdersClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(11)]    
     [RequiredField]
     public FixString ClOrdID { get; set; }

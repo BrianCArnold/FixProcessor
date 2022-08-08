@@ -17,7 +17,8 @@ public class MassQuoteMessage : FixMessageComponent<MassQuoteMessage>
   public ICollection<QuoteSetsClass> QuoteSetsCollection { get; set; } = new List<QuoteSetsClass>();
   [FieldNumberTarget(296)]
   public class QuoteSetsClass : FixMessageComponent<QuoteSetsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(302)]    
     [RequiredField]
     public FixString QuoteSetID { get; set; }
@@ -39,7 +40,8 @@ public class MassQuoteMessage : FixMessageComponent<MassQuoteMessage>
     public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
     [FieldNumberTarget(295)]
     public class QuoteEntriesClass : FixMessageComponent<QuoteEntriesClass>
-    {    
+    {
+      protected override bool EmitErrorOnDuplicateField => false;    
       [FieldNumber(299)]    
       [RequiredField]
       public FixString QuoteEntryID { get; set; }

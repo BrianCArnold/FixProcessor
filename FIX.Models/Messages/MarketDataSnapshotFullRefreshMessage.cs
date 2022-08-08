@@ -17,7 +17,8 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessageComponent<MarketDa
   public ICollection<MDEntriesClass> MDEntriesCollection { get; set; } = new List<MDEntriesClass>();
   [FieldNumberTarget(268)]
   public class MDEntriesClass : FixMessageComponent<MDEntriesClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(269)]    
     [RequiredField]
     public FixChar MDEntryType { get; set; }

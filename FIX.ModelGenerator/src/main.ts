@@ -231,7 +231,8 @@ ${indentation}[FieldNumberTarget(${t.id})]
 ${indentation}public ICollection<${t.name.replace(/^No/, '')}Class> ${t.name.replace(/^No/, '')}Collection { get; set; } = new List<${t.name.replace(/^No/, '')}Class>();
 ${indentation}[FieldNumberTarget(${t.id})]
 ${indentation}public class ${t.name.replace(/^No/, '')}Class : FixMessageComponent<${t.name.replace(/^No/, '')}Class>
-${indentation}{`;
+${indentation}{
+${indentation}  protected override bool EmitErrorOnDuplicateField => false;`;
                     processTags(t.children, indentLevel + 1);
                     fileContent += `${indentation}}
 `;

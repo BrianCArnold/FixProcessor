@@ -5,6 +5,7 @@ namespace FIX.Models;
 public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
     where TMessage : FixMessageComponent<TMessage>
 {
+    protected virtual bool EmitErrorOnDuplicateField => true;
     public FixMessageComponent()
     {
         
@@ -49,7 +50,7 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
         }
         return TypeRequiredProperties[type];
     }
-    public virtual bool PopulateMessageFields(FixStreamFieldQueue fields)
+    public virtual IEnumerable<ValidityMessage> PopulateMessageFields(FixStreamFieldQueue fields)
     {
         var messageProperties = GetProperties(typeof(TMessage));
         var collectionProperties = GetCollectionProperties(typeof(TMessage));
@@ -57,10 +58,12 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
         {
             if (processedFields.Contains(fields.Fields.Peek().FieldNumber))
             {
-                // we already processed this one, so we should exit if this is a repeating group.
-                // If it's not a repeating group (i.e. it's the root), the processing of the trailer should 
-                // throw an error when it encounters something it doesn't expect.
-                return false;
+                //In child components, we don't emit an error, a repeated value just means that we're repeating the group of fields.
+                if (EmitErrorOnDuplicateField)
+                {
+                    yield return new ValidityMessage(MessageLevel.Error, $"Unexpected duplicate field {fields.Fields.Peek().FieldNumber}");
+                }
+                break;
             }
             if (messageProperties.ContainsKey(fields.Fields.Peek().FieldNumber))
             {
@@ -80,7 +83,10 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
                     for (int i = 0; i < ((FixInt)propertyValue).Value; i++)
                     {
                         var subComponent = (IFixMessageComponent)Activator.CreateInstance(repeatedPart);
-                        subComponent.PopulateMessageFields(fields);
+                        foreach (var message in subComponent.PopulateMessageFields(fields))
+                        {
+                            yield return message;
+                        }
                         addMethod.Invoke(collection, new object[] { subComponent });
                     }
                 }
@@ -98,12 +104,7 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
                 break;
             }
         }
-        return true;
-    }
-    public virtual IEnumerable<ValidityMessage> GetStatus()
-    {
         var requiredProperties = GetRequiredProperties(typeof(TMessage));
-        var collectionProperties = GetCollectionProperties(typeof(TMessage));
         foreach (var fieldId in requiredProperties)
         {
             if (!processedFields.Contains(fieldId))
@@ -111,21 +112,6 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
                 yield return new ValidityMessage(MessageLevel.Error, $"Required field {fieldId} is missing.");
             }
         }
-        foreach (var property in collectionProperties)
-        {
-            var collection = property.Value.GetValue(this);
-            if (collection is IEnumerable<IFixMessageComponent> components)
-            {
-                foreach (var item in components)
-                {
-                    foreach (var status in item.GetStatus())
-                    {
-                        yield return status;
-                    }
-                }
-            }
-        }
-        yield break;
     }
 }
 

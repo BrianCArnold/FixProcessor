@@ -32,7 +32,8 @@ public class LogonMessage : FixMessageComponent<LogonMessage>
   public ICollection<MsgTypesClass> MsgTypesCollection { get; set; } = new List<MsgTypesClass>();
   [FieldNumberTarget(384)]
   public class MsgTypesClass : FixMessageComponent<MsgTypesClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(372)]
     public FixString RefMsgType { get; set; }
     

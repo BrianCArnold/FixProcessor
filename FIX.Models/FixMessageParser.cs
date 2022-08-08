@@ -30,9 +30,10 @@ public class FixMessageParser
 
     public FixMessage ParseFixMessage(Stream data)
     {
+        var processingMessages = new List<ValidityMessage>();
         var fieldQueue = new FixStreamFieldQueue(data);
         StandardHeader header = new StandardHeader();
-        header.PopulateMessageFields(fieldQueue);
+        processingMessages.AddRange(header.PopulateMessageFields(fieldQueue));
 
         IFixMessageComponent body;
         if (messageConstructors.ContainsKey(header.MsgType.Value))
@@ -43,19 +44,16 @@ public class FixMessageParser
         {
             body = new UnknownMessageComponent();
         }
-        var successfullyProcessedBody = body.PopulateMessageFields(fieldQueue);
+        processingMessages.AddRange(body.PopulateMessageFields(fieldQueue));
         
-        if (!successfullyProcessedBody)
+        #warning Need to check in with the trailer to see what fields it can process, we're only checking for checksum at the moment.
+        while(fieldQueue.Fields.Peek().FieldNumber != 10)
         {
-            //Ran into some kind of processing issue, skip to the end.
-            while(fieldQueue.Fields.Peek().FieldNumber != 10)
-            {
-                fieldQueue.Fields.Dequeue();
-            }
+            fieldQueue.Fields.Dequeue();
         }
         var trailer = new StandardTrailer();
-        trailer.PopulateMessageFields(fieldQueue);
+        processingMessages.AddRange(trailer.PopulateMessageFields(fieldQueue));
 
-        return new FixMessage(header, body, trailer, fieldQueue.CheckSum, successfullyProcessedBody);
+        return new FixMessage(header, body, trailer, processingMessages);
     }
 }

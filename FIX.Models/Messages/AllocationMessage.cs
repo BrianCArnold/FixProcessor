@@ -21,7 +21,8 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
   public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
   public class OrdersClass : FixMessageComponent<OrdersClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(11)]    
     [RequiredField]
     public FixString ClOrdID { get; set; }
@@ -68,7 +69,8 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
   public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
   [FieldNumberTarget(78)]
   public class AllocsClass : FixMessageComponent<AllocsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(79)]    
     [RequiredField]
     public FixString AllocAccount { get; set; }
@@ -145,7 +147,8 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
     public ICollection<MiscFeesClass> MiscFeesCollection { get; set; } = new List<MiscFeesClass>();
     [FieldNumberTarget(136)]
     public class MiscFeesClass : FixMessageComponent<MiscFeesClass>
-    {    
+    {
+      protected override bool EmitErrorOnDuplicateField => false;    
       [FieldNumber(137)]
       public Amt MiscFeeAmt { get; set; }
     
@@ -174,7 +177,8 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
   public ICollection<ExecsClass> ExecsCollection { get; set; } = new List<ExecsClass>();
   [FieldNumberTarget(124)]
   public class ExecsClass : FixMessageComponent<ExecsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(32)]
     public Quantity LastShares { get; set; }
     

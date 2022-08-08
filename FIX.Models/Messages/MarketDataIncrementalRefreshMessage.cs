@@ -13,7 +13,8 @@ public class MarketDataIncrementalRefreshMessage : FixMessageComponent<MarketDat
   public ICollection<MDEntriesClass> MDEntriesCollection { get; set; } = new List<MDEntriesClass>();
   [FieldNumberTarget(268)]
   public class MDEntriesClass : FixMessageComponent<MDEntriesClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(279)]    
     [RequiredField]
     public FixChar MDUpdateAction { get; set; }

@@ -25,7 +25,8 @@ public class EmailMessage : FixMessageComponent<EmailMessage>
   public ICollection<LinesOfTextClass> LinesOfTextCollection { get; set; } = new List<LinesOfTextClass>();
   [FieldNumberTarget(33)]
   public class LinesOfTextClass : FixMessageComponent<LinesOfTextClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(58)]    
     [RequiredField]
     public FixString Text { get; set; }
@@ -54,7 +55,8 @@ public class EmailMessage : FixMessageComponent<EmailMessage>
   public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
   [FieldNumberTarget(215)]
   public class RoutingIDsClass : FixMessageComponent<RoutingIDsClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(216)]
     public FixInt RoutingType { get; set; }
     
@@ -70,7 +72,8 @@ public class EmailMessage : FixMessageComponent<EmailMessage>
   public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
   public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
-  {    
+  {
+    protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(46)]
     public FixString RelatdSym { get; set; }
     
