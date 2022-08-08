@@ -64,7 +64,7 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
   public FixInt NoContraBrokers { get; set; }
 
   [FieldNumberTarget(382)]
-  public ICollection<ContraBrokersClass> ContraBrokers { get; set; } = new List<ContraBrokersClass>();
+  public ICollection<ContraBrokersClass> ContraBrokersCollection { get; set; } = new List<ContraBrokersClass>();
   [FieldNumberTarget(382)]
   public class ContraBrokersClass
   {    

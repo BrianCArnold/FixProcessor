@@ -40,7 +40,8 @@ public class LoginMessageTester
         StandardHeader header = new StandardHeader();
         header.PopulateMessageFields(enumerator);
         
-        LogonMessage loginMessage = new LogonMessage();
+        LogonMessage logonMessage = new LogonMessage();
+        
         
     }
 }

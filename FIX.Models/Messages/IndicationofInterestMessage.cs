@@ -101,7 +101,7 @@ public class IndicationofInterestMessage : FixMessage<IndicationofInterestMessag
   public FixInt NoIOIQualifiers { get; set; }
 
   [FieldNumberTarget(199)]
-  public ICollection<IOIQualifiersClass> IOIQualifiers { get; set; } = new List<IOIQualifiersClass>();
+  public ICollection<IOIQualifiersClass> IOIQualifiersCollection { get; set; } = new List<IOIQualifiersClass>();
   [FieldNumberTarget(199)]
   public class IOIQualifiersClass
   {    
@@ -129,7 +129,7 @@ public class IndicationofInterestMessage : FixMessage<IndicationofInterestMessag
   public FixInt NoRoutingIDs { get; set; }
 
   [FieldNumberTarget(215)]
-  public ICollection<RoutingIDsClass> RoutingIDs { get; set; } = new List<RoutingIDsClass>();
+  public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
   [FieldNumberTarget(215)]
   public class RoutingIDsClass
   {    

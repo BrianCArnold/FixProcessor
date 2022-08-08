@@ -22,7 +22,7 @@ public class NewOrderListMessage : FixMessage<NewOrderListMessage>
   public FixInt NoOrders { get; set; }
 
   [FieldNumberTarget(73)]
-  public ICollection<OrdersClass> Orders { get; set; } = new List<OrdersClass>();
+  public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
   public class OrdersClass
   {    
@@ -59,7 +59,7 @@ public class NewOrderListMessage : FixMessage<NewOrderListMessage>
     public FixInt NoAllocs { get; set; }
 
     [FieldNumberTarget(78)]
-    public ICollection<AllocsClass> Allocs { get; set; } = new List<AllocsClass>();
+    public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
     [FieldNumberTarget(78)]
     public class AllocsClass
     {    
@@ -96,7 +96,7 @@ public class NewOrderListMessage : FixMessage<NewOrderListMessage>
     public FixInt NoTradingSessions { get; set; }
 
     [FieldNumberTarget(386)]
-    public ICollection<TradingSessionsClass> TradingSessions { get; set; } = new List<TradingSessionsClass>();
+    public ICollection<TradingSessionsClass> TradingSessionsCollection { get; set; } = new List<TradingSessionsClass>();
     [FieldNumberTarget(386)]
     public class TradingSessionsClass
     {    

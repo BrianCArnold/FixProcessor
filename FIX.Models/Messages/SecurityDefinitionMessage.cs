@@ -96,7 +96,7 @@ public class SecurityDefinitionMessage : FixMessage<SecurityDefinitionMessage>
   public FixInt NoRelatedSym { get; set; }
 
   [FieldNumberTarget(146)]
-  public ICollection<RelatedSymClass> RelatedSym { get; set; } = new List<RelatedSymClass>();
+  public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
   public class RelatedSymClass
   {    
@@ -158,7 +158,7 @@ public class SecurityDefinitionMessage : FixMessage<SecurityDefinitionMessage>
     public FixData EncodedUnderlyingSecurityDesc { get; set; }
     
     [FieldNumber(319)]
-    public Quantity RatioQty { get; set; }
+    public Qty RatioQty { get; set; }
     
     [FieldNumber(54)]
     public FixChar Side { get; set; }

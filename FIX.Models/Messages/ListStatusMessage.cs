@@ -34,7 +34,7 @@ public class ListStatusMessage : FixMessage<ListStatusMessage>
   public FixInt NoOrders { get; set; }
 
   [FieldNumberTarget(73)]
-  public ICollection<OrdersClass> Orders { get; set; } = new List<OrdersClass>();
+  public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
   public class OrdersClass
   {    

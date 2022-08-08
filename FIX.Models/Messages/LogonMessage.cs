@@ -29,7 +29,7 @@ public class LogonMessage : FixMessage<LogonMessage>
   public FixInt NoMsgTypes { get; set; }
 
   [FieldNumberTarget(384)]
-  public ICollection<MsgTypesClass> MsgTypes { get; set; } = new List<MsgTypesClass>();
+  public ICollection<MsgTypesClass> MsgTypesCollection { get; set; } = new List<MsgTypesClass>();
   [FieldNumberTarget(384)]
   public class MsgTypesClass
   {    

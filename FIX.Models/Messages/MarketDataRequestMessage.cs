@@ -22,7 +22,7 @@ public class MarketDataRequestMessage : FixMessage<MarketDataRequestMessage>
   public FixInt NoMDEntryTypes { get; set; }
 
   [FieldNumberTarget(267)]
-  public ICollection<MDEntryTypesClass> MDEntryTypes { get; set; } = new List<MDEntryTypesClass>();
+  public ICollection<MDEntryTypesClass> MDEntryTypesCollection { get; set; } = new List<MDEntryTypesClass>();
   [FieldNumberTarget(267)]
   public class MDEntryTypesClass
   {    
@@ -37,7 +37,7 @@ public class MarketDataRequestMessage : FixMessage<MarketDataRequestMessage>
   public FixInt NoRelatedSym { get; set; }
 
   [FieldNumberTarget(146)]
-  public ICollection<RelatedSymClass> RelatedSym { get; set; } = new List<RelatedSymClass>();
+  public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
   public class RelatedSymClass
   {    

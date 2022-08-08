@@ -14,7 +14,7 @@ public class NewsMessage : FixMessage<NewsMessage>
   public FixInt LinesOfText { get; set; }
 
   [FieldNumberTarget(33)]
-  public ICollection<LinesOfTextClass> LinesOfText { get; set; } = new List<LinesOfTextClass>();
+  public ICollection<LinesOfTextClass> LinesOfTextCollection { get; set; } = new List<LinesOfTextClass>();
   [FieldNumberTarget(33)]
   public class LinesOfTextClass
   {    
@@ -46,7 +46,7 @@ public class NewsMessage : FixMessage<NewsMessage>
   public FixInt NoRoutingIDs { get; set; }
 
   [FieldNumberTarget(215)]
-  public ICollection<RoutingIDsClass> RoutingIDs { get; set; } = new List<RoutingIDsClass>();
+  public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
   [FieldNumberTarget(215)]
   public class RoutingIDsClass
   {    
@@ -62,7 +62,7 @@ public class NewsMessage : FixMessage<NewsMessage>
   public FixInt NoRelatedSym { get; set; }
 
   [FieldNumberTarget(146)]
-  public ICollection<RelatedSymClass> RelatedSym { get; set; } = new List<RelatedSymClass>();
+  public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
   public class RelatedSymClass
   {    

@@ -10,7 +10,7 @@ public class BidResponseMessage : FixMessage<BidResponseMessage>
   public FixInt NoBidComponents { get; set; }
 
   [FieldNumberTarget(420)]
-  public ICollection<BidComponentsClass> BidComponents { get; set; } = new List<BidComponentsClass>();
+  public ICollection<BidComponentsClass> BidComponentsCollection { get; set; } = new List<BidComponentsClass>();
   [FieldNumberTarget(420)]
   public class BidComponentsClass
   {    

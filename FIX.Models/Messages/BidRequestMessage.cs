@@ -51,7 +51,7 @@ public class BidRequestMessage : FixMessage<BidRequestMessage>
   public FixInt NoBidDescriptors { get; set; }
 
   [FieldNumberTarget(398)]
-  public ICollection<BidDescriptorsClass> BidDescriptors { get; set; } = new List<BidDescriptorsClass>();
+  public ICollection<BidDescriptorsClass> BidDescriptorsCollection { get; set; } = new List<BidDescriptorsClass>();
   [FieldNumberTarget(398)]
   public class BidDescriptorsClass
   {    
@@ -94,7 +94,7 @@ public class BidRequestMessage : FixMessage<BidRequestMessage>
   public FixInt NoBidComponents { get; set; }
 
   [FieldNumberTarget(420)]
-  public ICollection<BidComponentsClass> BidComponents { get; set; } = new List<BidComponentsClass>();
+  public ICollection<BidComponentsClass> BidComponentsCollection { get; set; } = new List<BidComponentsClass>();
   [FieldNumberTarget(420)]
   public class BidComponentsClass
   {    

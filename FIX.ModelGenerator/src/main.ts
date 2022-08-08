@@ -228,7 +228,7 @@ ${indentation}public ${type} ${t.name} { get; set; }
                 if (t.children.length > 0) {
                     fileContent += `
 ${indentation}[FieldNumberTarget(${t.id})]
-${indentation}public ICollection<${t.name.replace(/^No/, '')}Class> ${t.name.replace(/^No/, '')} { get; set; } = new List<${t.name.replace(/^No/, '')}Class>();
+${indentation}public ICollection<${t.name.replace(/^No/, '')}Class> ${t.name.replace(/^No/, '')}Collection { get; set; } = new List<${t.name.replace(/^No/, '')}Class>();
 ${indentation}[FieldNumberTarget(${t.id})]
 ${indentation}public class ${t.name.replace(/^No/, '')}Class
 ${indentation}{`;

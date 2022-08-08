@@ -52,7 +52,7 @@ public class OrderCancelReplaceRequestMessage : FixMessage<OrderCancelReplaceReq
   public FixInt NoAllocs { get; set; }
 
   [FieldNumberTarget(78)]
-  public ICollection<AllocsClass> Allocs { get; set; } = new List<AllocsClass>();
+  public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
   [FieldNumberTarget(78)]
   public class AllocsClass
   {    
@@ -86,7 +86,7 @@ public class OrderCancelReplaceRequestMessage : FixMessage<OrderCancelReplaceReq
   public FixInt NoTradingSessions { get; set; }
 
   [FieldNumberTarget(386)]
-  public ICollection<TradingSessionsClass> TradingSessions { get; set; } = new List<TradingSessionsClass>();
+  public ICollection<TradingSessionsClass> TradingSessionsCollection { get; set; } = new List<TradingSessionsClass>();
   [FieldNumberTarget(386)]
   public class TradingSessionsClass
   {    

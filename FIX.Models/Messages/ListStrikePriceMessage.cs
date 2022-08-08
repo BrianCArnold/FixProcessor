@@ -18,7 +18,7 @@ public class ListStrikePriceMessage : FixMessage<ListStrikePriceMessage>
   public FixInt NoStrikes { get; set; }
 
   [FieldNumberTarget(428)]
-  public ICollection<StrikesClass> Strikes { get; set; } = new List<StrikesClass>();
+  public ICollection<StrikesClass> StrikesCollection { get; set; } = new List<StrikesClass>();
   [FieldNumberTarget(428)]
   public class StrikesClass
   {    

@@ -14,7 +14,7 @@ public class MassQuoteMessage : FixMessage<MassQuoteMessage>
   public FixInt NoQuoteSets { get; set; }
 
   [FieldNumberTarget(296)]
-  public ICollection<QuoteSetsClass> QuoteSets { get; set; } = new List<QuoteSetsClass>();
+  public ICollection<QuoteSetsClass> QuoteSetsCollection { get; set; } = new List<QuoteSetsClass>();
   [FieldNumberTarget(296)]
   public class QuoteSetsClass
   {    
@@ -36,7 +36,7 @@ public class MassQuoteMessage : FixMessage<MassQuoteMessage>
     public FixInt NoQuoteEntries { get; set; }
 
     [FieldNumberTarget(295)]
-    public ICollection<QuoteEntriesClass> QuoteEntries { get; set; } = new List<QuoteEntriesClass>();
+    public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
     [FieldNumberTarget(295)]
     public class QuoteEntriesClass
     {    

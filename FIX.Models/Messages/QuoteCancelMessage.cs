@@ -18,7 +18,7 @@ public class QuoteCancelMessage : FixMessage<QuoteCancelMessage>
   public FixInt NoQuoteEntries { get; set; }
 
   [FieldNumberTarget(295)]
-  public ICollection<QuoteEntriesClass> QuoteEntries { get; set; } = new List<QuoteEntriesClass>();
+  public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
   [FieldNumberTarget(295)]
   public class QuoteEntriesClass
   {    

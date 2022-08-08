@@ -18,7 +18,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
   public FixInt NoOrders { get; set; }
 
   [FieldNumberTarget(73)]
-  public ICollection<OrdersClass> Orders { get; set; } = new List<OrdersClass>();
+  public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
   public class OrdersClass
   {    
@@ -65,7 +65,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
   public FixInt NoAllocs { get; set; }
 
   [FieldNumberTarget(78)]
-  public ICollection<AllocsClass> Allocs { get; set; } = new List<AllocsClass>();
+  public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
   [FieldNumberTarget(78)]
   public class AllocsClass
   {    
@@ -142,7 +142,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
     public FixInt NoMiscFees { get; set; }
 
     [FieldNumberTarget(136)]
-    public ICollection<MiscFeesClass> MiscFees { get; set; } = new List<MiscFeesClass>();
+    public ICollection<MiscFeesClass> MiscFeesCollection { get; set; } = new List<MiscFeesClass>();
     [FieldNumberTarget(136)]
     public class MiscFeesClass
     {    
@@ -171,7 +171,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
   public FixInt NoExecs { get; set; }
 
   [FieldNumberTarget(124)]
-  public ICollection<ExecsClass> Execs { get; set; } = new List<ExecsClass>();
+  public ICollection<ExecsClass> ExecsCollection { get; set; } = new List<ExecsClass>();
   [FieldNumberTarget(124)]
   public class ExecsClass
   {    

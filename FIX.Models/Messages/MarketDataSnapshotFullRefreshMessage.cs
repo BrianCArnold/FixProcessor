@@ -14,7 +14,7 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessage<MarketDataSnapsho
   public FixInt NoMDEntries { get; set; }
 
   [FieldNumberTarget(268)]
-  public ICollection<MDEntriesClass> MDEntries { get; set; } = new List<MDEntriesClass>();
+  public ICollection<MDEntriesClass> MDEntriesCollection { get; set; } = new List<MDEntriesClass>();
   [FieldNumberTarget(268)]
   public class MDEntriesClass
   {    
@@ -33,7 +33,7 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessage<MarketDataSnapsho
     public Qty MDEntrySize { get; set; }
     
     [FieldNumber(272)]
-    public UTCDate MDEntryDate { get; set; }
+    public UTCDateOnly MDEntryDate { get; set; }
     
     [FieldNumber(273)]
     public UTCTimeOnly MDEntryTime { get; set; }
