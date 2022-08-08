@@ -8,7 +8,7 @@ public class FixStreamFieldQueue : IDisposable
 
     public Queue<FixField> Fields { get; private set; }
 
-    public FixStreamFieldQueue(MemoryStream strm)
+    public FixStreamFieldQueue(Stream strm)
     {
         fixStream = new MemoryStream();
         strm.CopyTo(fixStream);

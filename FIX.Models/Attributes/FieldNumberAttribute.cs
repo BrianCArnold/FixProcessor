@@ -13,9 +13,6 @@ public sealed class FieldNumberAttribute : System.Attribute
         this.fieldNumber = fieldNumber;
     }
     
-    public uint FieldNumber
-    {
-        get { return fieldNumber; }
-    }
+    public uint FieldNumber => fieldNumber; 
     
 }

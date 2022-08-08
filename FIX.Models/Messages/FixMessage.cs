@@ -2,8 +2,8 @@ using System.Reflection;
 
 namespace FIX.Models;
 
-public class FixMessage<TMessage>
-where TMessage : FixMessage<TMessage>
+public abstract class FixMessage<TMessage> : IFixMessage
+    where TMessage : FixMessage<TMessage>
 {
     public FixMessage()
     {
