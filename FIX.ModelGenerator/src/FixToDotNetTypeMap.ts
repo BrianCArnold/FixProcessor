@@ -23,5 +23,6 @@ export const typeMap: { [key: string]: string } = {
     "MultipleValueString": "MultipleValueString",
     "UTCDateOnly": "UTCDateOnly",
     "UTCTimeOnly": "UTCTimeOnly",
-    "UTCTimeStamp": "UTCTimeStamp"
+    "UTCTimeStamp": "UTCTimeStamp",
+    "UTCTimestamp": "UTCTimeStamp"
 };
