@@ -94,10 +94,10 @@ public class OrderCancelRequestMessage : FixMessage<OrderCancelRequestMessage>
   public FixData EncodedSecurityDesc { get; set; }
     
   [FieldNumber(38)]
-  public Qty OrderQty { get; set; }
+  public Quantity OrderQty { get; set; }
     
   [FieldNumber(152)]
-  public Qty CashOrderQty { get; set; }
+  public Quantity CashOrderQty { get; set; }
     
   [FieldNumber(376)]
   public FixString ComplianceID { get; set; }

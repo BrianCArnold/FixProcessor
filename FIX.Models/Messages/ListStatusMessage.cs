@@ -44,7 +44,7 @@ public class ListStatusMessage : FixMessage<ListStatusMessage>
     
     [FieldNumber(14)]    
     [RequiredField]
-    public Qty CumQty { get; set; }
+    public Quantity CumQty { get; set; }
     
     [FieldNumber(39)]    
     [RequiredField]
@@ -52,11 +52,11 @@ public class ListStatusMessage : FixMessage<ListStatusMessage>
     
     [FieldNumber(151)]    
     [RequiredField]
-    public Qty LeavesQty { get; set; }
+    public Quantity LeavesQty { get; set; }
     
     [FieldNumber(84)]    
     [RequiredField]
-    public Qty CxlQty { get; set; }
+    public Quantity CxlQty { get; set; }
     
     [FieldNumber(6)]    
     [RequiredField]

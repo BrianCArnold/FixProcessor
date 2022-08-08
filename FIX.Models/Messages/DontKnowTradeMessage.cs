@@ -79,13 +79,13 @@ public class DontKnowTradeMessage : FixMessage<DontKnowTradeMessage>
   public FixData EncodedSecurityDesc { get; set; }
     
   [FieldNumber(38)]
-  public Qty OrderQty { get; set; }
+  public Quantity OrderQty { get; set; }
     
   [FieldNumber(152)]
-  public Qty CashOrderQty { get; set; }
+  public Quantity CashOrderQty { get; set; }
     
   [FieldNumber(32)]
-  public Qty LastShares { get; set; }
+  public Quantity LastShares { get; set; }
     
   [FieldNumber(31)]
   public Price LastPx { get; set; }

@@ -151,7 +151,7 @@ public class SecurityDefinitionRequestMessage : FixMessage<SecurityDefinitionReq
     public FixData EncodedUnderlyingSecurityDesc { get; set; }
     
     [FieldNumber(319)]
-    public Qty RatioQty { get; set; }
+    public Quantity RatioQty { get; set; }
     
     [FieldNumber(54)]
     public FixChar Side { get; set; }

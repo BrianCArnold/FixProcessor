@@ -40,7 +40,7 @@ public class TradingSessionStatusMessage : FixMessage<TradingSessionStatusMessag
   public UTCTimeStamp TradSesEndTime { get; set; }
     
   [FieldNumber(387)]
-  public Qty TotalVolumeTraded { get; set; }
+  public Quantity TotalVolumeTraded { get; set; }
     
   [FieldNumber(58)]
   public FixString Text { get; set; }

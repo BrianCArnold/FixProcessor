@@ -10,9 +10,8 @@ where TMessage : FixMessage<TMessage>
         
     }
 
-    public Dictionary<Type, Dictionary<uint, PropertyInfo>> TypeProperties { get; set; }
-
-    public Dictionary<Type, bool> TypePropertiesPopulated { get; set; }
+    private Dictionary<Type, Dictionary<uint, PropertyInfo>> TypeProperties { get; set; } = new Dictionary<Type, Dictionary<uint, PropertyInfo>>();
+    private Dictionary<Type, bool> TypePropertiesPopulated { get; set; } = new Dictionary<Type, bool>();
     public Dictionary<uint, PropertyInfo> GetProperties(Type type)
     {
         if (TypeProperties.ContainsKey(type))
@@ -20,23 +19,21 @@ where TMessage : FixMessage<TMessage>
             return TypeProperties[type];
         }
         var properties = type.GetProperties();
-        TypeProperties.Add(type, properties.ToDictionary(p => p.GetCustomAttribute<FieldNumberAttribute>().FieldNumber));
+        TypeProperties.Add(type, properties.Where(p=>p.GetCustomAttribute<FieldNumberAttribute>() != null).ToDictionary(p => p.GetCustomAttribute<FieldNumberAttribute>().FieldNumber));
         TypePropertiesPopulated.Add(type, true);
         return TypeProperties[type];
     }
-    public void PopulateMessageFields(IEnumerator<FixField> fields)
+    public void PopulateMessageFields(FixStreamFieldQueue fields)
     {
-        while (fields.MoveNext())
+        var messageProperties = GetProperties(typeof(TMessage));
+        while (fields.Fields.Any() && messageProperties.ContainsKey(fields.Fields.Peek().FieldNumber))
         {
-            var field = fields.Current;
-            var properties = GetProperties(typeof(TMessage));
-            if (properties.ContainsKey(field.FieldNumber))
-            {
-                var property = properties[field.FieldNumber];
-                property.SetValue(this, field.Value);
-            }
+            var field = fields.Fields.Dequeue();
+            var property = messageProperties[field.FieldNumber];
+            var propertyValue = Activator.CreateInstance(property.PropertyType, field.Value);
+            property.SetValue(this, propertyValue);
         }
     }
-
-    
 }
+
+

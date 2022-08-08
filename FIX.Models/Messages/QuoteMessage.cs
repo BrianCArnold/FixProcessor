@@ -82,10 +82,10 @@ public class QuoteMessage : FixMessage<QuoteMessage>
   public Price OfferPx { get; set; }
     
   [FieldNumber(134)]
-  public Qty BidSize { get; set; }
+  public Quantity BidSize { get; set; }
     
   [FieldNumber(135)]
-  public Qty OfferSize { get; set; }
+  public Quantity OfferSize { get; set; }
     
   [FieldNumber(62)]
   public UTCTimeStamp ValidUntilTime { get; set; }
@@ -115,7 +115,7 @@ public class QuoteMessage : FixMessage<QuoteMessage>
   public LocalMktDate FutSettDate2 { get; set; }
     
   [FieldNumber(192)]
-  public Qty OrderQty2 { get; set; }
+  public Quantity OrderQty2 { get; set; }
     
   [FieldNumber(15)]
   public Currency Currency { get; set; }

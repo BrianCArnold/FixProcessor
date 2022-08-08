@@ -108,10 +108,10 @@ public class MassQuoteMessage : FixMessage<MassQuoteMessage>
       public Price OfferPx { get; set; }
     
       [FieldNumber(134)]
-      public Qty BidSize { get; set; }
+      public Quantity BidSize { get; set; }
     
       [FieldNumber(135)]
-      public Qty OfferSize { get; set; }
+      public Quantity OfferSize { get; set; }
     
       [FieldNumber(62)]
       public UTCTimeStamp ValidUntilTime { get; set; }
@@ -144,7 +144,7 @@ public class MassQuoteMessage : FixMessage<MassQuoteMessage>
       public LocalMktDate FutSettDate2 { get; set; }
     
       [FieldNumber(192)]
-      public Qty OrderQty2 { get; set; }
+      public Quantity OrderQty2 { get; set; }
     
       [FieldNumber(15)]
       public Currency Currency { get; set; }
@@ -215,9 +215,9 @@ public class MassQuoteMessage : FixMessage<MassQuoteMessage>
   public FixInt QuoteResponseLevel { get; set; }
     
   [FieldNumber(293)]
-  public Qty DefBidSize { get; set; }
+  public Quantity DefBidSize { get; set; }
     
   [FieldNumber(294)]
-  public Qty DefOfferSize { get; set; }
+  public Quantity DefOfferSize { get; set; }
 
 }

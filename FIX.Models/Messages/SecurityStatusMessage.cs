@@ -93,10 +93,10 @@ public class SecurityStatusMessage : FixMessage<SecurityStatusMessage>
   public FixBool DueToRelated { get; set; }
     
   [FieldNumber(330)]
-  public Qty BuyVolume { get; set; }
+  public Quantity BuyVolume { get; set; }
     
   [FieldNumber(331)]
-  public Qty SellVolume { get; set; }
+  public Quantity SellVolume { get; set; }
     
   [FieldNumber(332)]
   public Price HighPx { get; set; }

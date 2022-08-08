@@ -34,11 +34,11 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
     
   [FieldNumber(151)]    
   [RequiredField]
-  public Qty LeavesQty { get; set; }
+  public Quantity LeavesQty { get; set; }
     
   [FieldNumber(14)]    
   [RequiredField]
-  public Qty CumQty { get; set; }
+  public Quantity CumQty { get; set; }
     
   [FieldNumber(6)]    
   [RequiredField]
@@ -75,7 +75,7 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
     public FixString ContraTrader { get; set; }
     
     [FieldNumber(437)]
-    public Qty ContraTradeQty { get; set; }
+    public Quantity ContraTradeQty { get; set; }
     
     [FieldNumber(438)]
     public UTCTimeStamp ContraTradeTime { get; set; }
@@ -157,10 +157,10 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
   public FixData EncodedSecurityDesc { get; set; }
     
   [FieldNumber(38)]
-  public Qty OrderQty { get; set; }
+  public Quantity OrderQty { get; set; }
     
   [FieldNumber(152)]
-  public Qty CashOrderQty { get; set; }
+  public Quantity CashOrderQty { get; set; }
     
   [FieldNumber(40)]
   public FixChar OrdType { get; set; }
@@ -208,7 +208,7 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
   public FixChar Rule80A { get; set; }
     
   [FieldNumber(32)]
-  public Qty LastShares { get; set; }
+  public Quantity LastShares { get; set; }
     
   [FieldNumber(31)]
   public Price LastPx { get; set; }
@@ -229,10 +229,10 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
   public FixChar LastCapacity { get; set; }
     
   [FieldNumber(424)]
-  public Qty DayOrderQty { get; set; }
+  public Quantity DayOrderQty { get; set; }
     
   [FieldNumber(425)]
-  public Qty DayCumQty { get; set; }
+  public Quantity DayCumQty { get; set; }
     
   [FieldNumber(426)]
   public Price DayAvgPx { get; set; }
@@ -274,16 +274,16 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
   public FixChar HandlInst { get; set; }
     
   [FieldNumber(110)]
-  public Qty MinQty { get; set; }
+  public Quantity MinQty { get; set; }
     
   [FieldNumber(111)]
-  public Qty MaxFloor { get; set; }
+  public Quantity MaxFloor { get; set; }
     
   [FieldNumber(77)]
   public FixChar OpenClose { get; set; }
     
   [FieldNumber(210)]
-  public Qty MaxShow { get; set; }
+  public Quantity MaxShow { get; set; }
     
   [FieldNumber(58)]
   public FixString Text { get; set; }
@@ -298,7 +298,7 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
   public LocalMktDate FutSettDate2 { get; set; }
     
   [FieldNumber(192)]
-  public Qty OrderQty2 { get; set; }
+  public Quantity OrderQty2 { get; set; }
     
   [FieldNumber(439)]
   public FixString ClearingFirm { get; set; }

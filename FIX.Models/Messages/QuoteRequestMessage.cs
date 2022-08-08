@@ -89,7 +89,7 @@ public class QuoteRequestMessage : FixMessage<QuoteRequestMessage>
     public FixChar Side { get; set; }
     
     [FieldNumber(38)]
-    public Qty OrderQty { get; set; }
+    public Quantity OrderQty { get; set; }
     
     [FieldNumber(64)]
     public LocalMktDate FutSettDate { get; set; }
@@ -101,7 +101,7 @@ public class QuoteRequestMessage : FixMessage<QuoteRequestMessage>
     public LocalMktDate FutSettDate2 { get; set; }
     
     [FieldNumber(192)]
-    public Qty OrderQty2 { get; set; }
+    public Quantity OrderQty2 { get; set; }
     
     [FieldNumber(126)]
     public UTCTimeStamp ExpireTime { get; set; }

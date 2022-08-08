@@ -30,7 +30,7 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessage<MarketDataSnapsho
     public Currency Currency { get; set; }
     
     [FieldNumber(271)]
-    public Qty MDEntrySize { get; set; }
+    public Quantity MDEntrySize { get; set; }
     
     [FieldNumber(272)]
     public UTCDateOnly MDEntryDate { get; set; }
@@ -75,7 +75,7 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessage<MarketDataSnapsho
     public UTCTimeStamp ExpireTime { get; set; }
     
     [FieldNumber(110)]
-    public Qty MinQty { get; set; }
+    public Quantity MinQty { get; set; }
     
     [FieldNumber(18)]
     public MultipleValueString ExecInst { get; set; }
@@ -175,6 +175,6 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessage<MarketDataSnapsho
   public FixChar CorporateAction { get; set; }
     
   [FieldNumber(387)]
-  public Qty TotalVolumeTraded { get; set; }
+  public Quantity TotalVolumeTraded { get; set; }
 
 }

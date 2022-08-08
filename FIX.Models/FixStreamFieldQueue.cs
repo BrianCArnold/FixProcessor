@@ -2,20 +2,24 @@ using System.Collections;
 
 namespace FIX.Models;
 
-public class FixStreamFieldEnumerator : IEnumerator<FixField>, IDisposable
+public class FixStreamFieldQueue : IDisposable
 {
     private readonly MemoryStream fixStream;
-    public FixStreamFieldEnumerator(MemoryStream strm)
-    {
-        this.fixStream = strm;
-    }
-    private FixField internalCurrent = null;
-    FixField IEnumerator<FixField>.Current { get => internalCurrent == null ? throw new IndexOutOfRangeException() : internalCurrent; }
 
-    object IEnumerator.Current => internalCurrent == null ? throw new IndexOutOfRangeException() : internalCurrent.Value;
+    public Queue<FixField> Fields { get; private set; }
+
+    public FixStreamFieldQueue(MemoryStream strm)
+    {
+        fixStream = new MemoryStream();
+        strm.CopyTo(fixStream);
+        fixStream.Position = 0;
+        this.Fields = new Queue<FixField>(IterateStream());
+    }
 
     private bool completedLastTime = false;
     private bool disposedValue;
+    private uint checkSum = 0;
+    public byte CheckSum => (byte)(checkSum % 256);
 
     private IEnumerable<byte> InternalReadUntilSOH()
     {
@@ -42,28 +46,30 @@ public class FixStreamFieldEnumerator : IEnumerator<FixField>, IDisposable
     }
 
     private char SOHChar => '\u0001';
-    public bool MoveNext()
-    {
-        if (completedLastTime)
-        {
-            internalCurrent = null;
-            return false;
-        }
-        var fieldBytes = ReadUntilSOH();
-        if (fieldBytes.Length > 0)
-        {
-            internalCurrent = new FixField(fieldBytes);
-            return true;
-        }
-        else 
-        {
-            return false;
-        }
-    }
 
-    public void Reset()
+    private IEnumerable<FixField> IterateStream()
     {
-        fixStream.Position = 0;
+        while (true)
+        {
+            if (completedLastTime)
+            {
+                yield break;
+            }
+            var fieldBytes = ReadUntilSOH();
+            if (fieldBytes.Length > 0)
+            {
+                var field = new FixField(fieldBytes);
+                if (field.FieldNumber != 10)
+                {
+                    checkSum += fieldBytes.Aggregate(0u, (c,n) => c + n) + (ushort)SOHChar;
+                }
+                yield return field;
+            }
+            else 
+            {
+                yield break;
+            }
+        }
     }
 
     protected virtual void Dispose(bool disposing)

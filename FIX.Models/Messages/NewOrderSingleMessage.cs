@@ -50,7 +50,7 @@ public class NewOrderSingleMessage : FixMessage<NewOrderSingleMessage>
     public FixString AllocAccount { get; set; }
     
     [FieldNumber(80)]
-    public Qty AllocShares { get; set; }
+    public Quantity AllocShares { get; set; }
   }
     
   [FieldNumber(63)]
@@ -63,10 +63,10 @@ public class NewOrderSingleMessage : FixMessage<NewOrderSingleMessage>
   public MultipleValueString ExecInst { get; set; }
     
   [FieldNumber(110)]
-  public Qty MinQty { get; set; }
+  public Quantity MinQty { get; set; }
     
   [FieldNumber(111)]
-  public Qty MaxFloor { get; set; }
+  public Quantity MaxFloor { get; set; }
     
   [FieldNumber(100)]
   public Exchange ExDestination { get; set; }
@@ -148,10 +148,10 @@ public class NewOrderSingleMessage : FixMessage<NewOrderSingleMessage>
   public FixBool LocateReqd { get; set; }
     
   [FieldNumber(38)]
-  public Qty OrderQty { get; set; }
+  public Quantity OrderQty { get; set; }
     
   [FieldNumber(152)]
-  public Qty CashOrderQty { get; set; }
+  public Quantity CashOrderQty { get; set; }
     
   [FieldNumber(44)]
   public Price Price { get; set; }
@@ -217,7 +217,7 @@ public class NewOrderSingleMessage : FixMessage<NewOrderSingleMessage>
   public LocalMktDate FutSettDate2 { get; set; }
     
   [FieldNumber(192)]
-  public Qty OrderQty2 { get; set; }
+  public Quantity OrderQty2 { get; set; }
     
   [FieldNumber(77)]
   public FixChar OpenClose { get; set; }
@@ -229,7 +229,7 @@ public class NewOrderSingleMessage : FixMessage<NewOrderSingleMessage>
   public FixInt CustomerOrFirm { get; set; }
     
   [FieldNumber(210)]
-  public Qty MaxShow { get; set; }
+  public Quantity MaxShow { get; set; }
     
   [FieldNumber(211)]
   public PriceOffset PegDifference { get; set; }

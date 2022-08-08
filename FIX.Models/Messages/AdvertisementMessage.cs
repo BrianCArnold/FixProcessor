@@ -22,7 +22,7 @@ public class AdvertisementMessage : FixMessage<AdvertisementMessage>
     
   [FieldNumber(53)]    
   [RequiredField]
-  public Qty Shares { get; set; }
+  public Quantity Shares { get; set; }
     
   [FieldNumber(3)]
   public FixString AdvRefID { get; set; }

@@ -49,7 +49,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
     
   [FieldNumber(53)]    
   [RequiredField]
-  public Qty Shares { get; set; }
+  public Quantity Shares { get; set; }
     
   [FieldNumber(6)]    
   [RequiredField]
@@ -75,7 +75,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
     
     [FieldNumber(80)]    
     [RequiredField]
-    public Qty AllocShares { get; set; }
+    public Quantity AllocShares { get; set; }
     
     [FieldNumber(366)]
     public Price AllocPrice { get; set; }
@@ -176,7 +176,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
   public class ExecsClass
   {    
     [FieldNumber(32)]
-    public Qty LastShares { get; set; }
+    public Quantity LastShares { get; set; }
     
     [FieldNumber(17)]
     public FixString ExecID { get; set; }
