@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("C")]
-public class EmailMessage : FixMessage<EmailMessage>
+public class EmailMessage : FixMessageComponent<EmailMessage>
 {
     
   [FieldNumber(164)]    
@@ -24,7 +24,7 @@ public class EmailMessage : FixMessage<EmailMessage>
   [FieldNumberTarget(33)]
   public ICollection<LinesOfTextClass> LinesOfTextCollection { get; set; } = new List<LinesOfTextClass>();
   [FieldNumberTarget(33)]
-  public class LinesOfTextClass
+  public class LinesOfTextClass : FixMessageComponent<LinesOfTextClass>
   {    
     [FieldNumber(58)]    
     [RequiredField]
@@ -53,7 +53,7 @@ public class EmailMessage : FixMessage<EmailMessage>
   [FieldNumberTarget(215)]
   public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
   [FieldNumberTarget(215)]
-  public class RoutingIDsClass
+  public class RoutingIDsClass : FixMessageComponent<RoutingIDsClass>
   {    
     [FieldNumber(216)]
     public FixInt RoutingType { get; set; }
@@ -69,7 +69,7 @@ public class EmailMessage : FixMessage<EmailMessage>
   [FieldNumberTarget(146)]
   public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
-  public class RelatedSymClass
+  public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
   {    
     [FieldNumber(46)]
     public FixString RelatdSym { get; set; }

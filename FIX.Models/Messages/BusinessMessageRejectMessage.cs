@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("j")]
-public class BusinessMessageRejectMessage : FixMessage<BusinessMessageRejectMessage>
+public class BusinessMessageRejectMessage : FixMessageComponent<BusinessMessageRejectMessage>
 {
     
   [FieldNumber(372)]    

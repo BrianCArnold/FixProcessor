@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("Y")]
-public class MarketDataRequestRejectMessage : FixMessage<MarketDataRequestRejectMessage>
+public class MarketDataRequestRejectMessage : FixMessageComponent<MarketDataRequestRejectMessage>
 {
     
   [FieldNumber(262)]    

@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("T")]
-public class SettlementInstructionsMessage : FixMessage<SettlementInstructionsMessage>
+public class SettlementInstructionsMessage : FixMessageComponent<SettlementInstructionsMessage>
 {
     
   [FieldNumber(162)]    

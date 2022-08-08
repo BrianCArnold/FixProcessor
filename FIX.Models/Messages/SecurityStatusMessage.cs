@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("f")]
-public class SecurityStatusMessage : FixMessage<SecurityStatusMessage>
+public class SecurityStatusMessage : FixMessageComponent<SecurityStatusMessage>
 {
     
   [FieldNumber(55)]    

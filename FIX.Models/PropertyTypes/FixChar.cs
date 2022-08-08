@@ -18,4 +18,8 @@ public class FixChar : IFixType
     {
         return internalValue.ToString();
     }
+    public static implicit operator char(FixChar value)
+    {
+        return value.Value;
+    }
 }

@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("5")]
-public class LogoutMessage : FixMessage<LogoutMessage>
+public class LogoutMessage : FixMessageComponent<LogoutMessage>
 {
     
   [FieldNumber(58)]

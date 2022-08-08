@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("G")]
-public class OrderCancelReplaceRequestMessage : FixMessage<OrderCancelReplaceRequestMessage>
+public class OrderCancelReplaceRequestMessage : FixMessageComponent<OrderCancelReplaceRequestMessage>
 {
     
   [FieldNumber(41)]    
@@ -54,7 +54,7 @@ public class OrderCancelReplaceRequestMessage : FixMessage<OrderCancelReplaceReq
   [FieldNumberTarget(78)]
   public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
   [FieldNumberTarget(78)]
-  public class AllocsClass
+  public class AllocsClass : FixMessageComponent<AllocsClass>
   {    
     [FieldNumber(79)]
     public FixString AllocAccount { get; set; }
@@ -88,7 +88,7 @@ public class OrderCancelReplaceRequestMessage : FixMessage<OrderCancelReplaceReq
   [FieldNumberTarget(386)]
   public ICollection<TradingSessionsClass> TradingSessionsCollection { get; set; } = new List<TradingSessionsClass>();
   [FieldNumberTarget(386)]
-  public class TradingSessionsClass
+  public class TradingSessionsClass : FixMessageComponent<TradingSessionsClass>
   {    
     [FieldNumber(336)]
     public FixString TradingSessionID { get; set; }

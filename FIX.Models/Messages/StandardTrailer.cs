@@ -1,6 +1,6 @@
 namespace FIX.Models;
 
-public class StandardTrailer : FixMessage<StandardTrailer>
+public class StandardTrailer : FixMessageComponent<StandardTrailer>
 {
     
   [FieldNumber(10)]    

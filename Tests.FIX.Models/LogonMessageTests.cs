@@ -2,14 +2,13 @@ using System.Text;
 
 namespace Tests.FIX.Models;
 
-public class LoginMessageTester
+public class LogonMessageTests
 {
     [Fact]
     public void HeaderProcessedCorrectly()
     {
-        string srcString = "8=FIX.4.2|9=0020|35=A|49=INCA|56=BATS|34=000000001|52=20211203-13:30:00.632|50=0028|57=PROD|98=0|108=30|10=084|";
-        var SOHString = srcString.Replace('|', (char)0x01);
-        byte[] messageBytes = Encoding.UTF8.GetBytes(SOHString);
+        string srcString = "8=FIX.4.2|9=0020|35=A|49=INCA|56=BATS|34=000000001|52=20211203-13:30:00.632|50=0028|57=PROD|98=0|108=30|10=084|".ChangeStringToUseSOHChar();
+        byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
         StandardHeader header = new StandardHeader();
         var fieldQueue = new FixStreamFieldQueue(fixStream);
@@ -29,9 +28,8 @@ public class LoginMessageTester
     [Fact]
     public void LoginMessageProcessedCorrectly()
     {
-        string srcString = "8=FIX.4.2|9=0020|35=A|49=INCA|56=BATS|34=000000001|52=20211203-13:30:00.632|50=0028|57=PROD|98=0|108=30|10=084|";
-        var SOHString = srcString.Replace('|', (char)0x01);
-        byte[] messageBytes = Encoding.UTF8.GetBytes(SOHString);
+        string srcString = "8=FIX.4.2|9=0020|35=A|49=INCA|56=BATS|34=000000001|52=20211203-13:30:00.632|50=0028|57=PROD|98=0|108=30|10=084|".ChangeStringToUseSOHChar();
+        byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
         var fieldQueue = new FixStreamFieldQueue(fixStream);
 
@@ -48,9 +46,8 @@ public class LoginMessageTester
     [Fact]
     public void TrailerProcessedCorrectly()
     {
-        string srcString = "8=FIX.4.2|9=0020|35=A|49=INCA|56=BATS|34=000000001|52=20211203-13:30:00.632|50=0028|57=PROD|98=0|108=30|10=084|";
-        var SOHString = srcString.Replace('|', (char)0x01);
-        byte[] messageBytes = Encoding.UTF8.GetBytes(SOHString);
+        string srcString = "8=FIX.4.2|9=0020|35=A|49=INCA|56=BATS|34=000000001|52=20211203-13:30:00.632|50=0028|57=PROD|98=0|108=30|10=084|".ChangeStringToUseSOHChar();
+        byte[] messageBytes = Encoding.UTF8.GetBytes(srcString);
         var fixStream = new MemoryStream(messageBytes);
         var fieldQueue = new FixStreamFieldQueue(fixStream);
 
@@ -64,7 +61,7 @@ public class LoginMessageTester
         trailer.PopulateMessageFields(fieldQueue);
 
         
+        
         int.Parse(trailer.CheckSum.Value).Should().Be(fieldQueue.CheckSum);
     }
-
 }

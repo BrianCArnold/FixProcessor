@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("Q")]
-public class DontKnowTradeMessage : FixMessage<DontKnowTradeMessage>
+public class DontKnowTradeMessage : FixMessageComponent<DontKnowTradeMessage>
 {
     
   [FieldNumber(37)]    

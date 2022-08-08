@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("P")]
-public class AllocationACKMessage : FixMessage<AllocationACKMessage>
+public class AllocationACKMessage : FixMessageComponent<AllocationACKMessage>
 {
     
   [FieldNumber(70)]    

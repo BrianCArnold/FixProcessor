@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("2")]
-public class ResendRequestMessage : FixMessage<ResendRequestMessage>
+public class ResendRequestMessage : FixMessageComponent<ResendRequestMessage>
 {
     
   [FieldNumber(7)]    

@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("9")]
-public class OrderCancelRejectMessage : FixMessage<OrderCancelRejectMessage>
+public class OrderCancelRejectMessage : FixMessageComponent<OrderCancelRejectMessage>
 {
     
   [FieldNumber(37)]    

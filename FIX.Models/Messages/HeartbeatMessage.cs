@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("0")]
-public class HeartbeatMessage : FixMessage<HeartbeatMessage>
+public class HeartbeatMessage : FixMessageComponent<HeartbeatMessage>
 {
     
   [FieldNumber(112)]

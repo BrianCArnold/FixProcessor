@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("J")]
-public class AllocationMessage : FixMessage<AllocationMessage>
+public class AllocationMessage : FixMessageComponent<AllocationMessage>
 {
     
   [FieldNumber(70)]    
@@ -20,7 +20,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
   [FieldNumberTarget(73)]
   public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
-  public class OrdersClass
+  public class OrdersClass : FixMessageComponent<OrdersClass>
   {    
     [FieldNumber(11)]    
     [RequiredField]
@@ -67,7 +67,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
   [FieldNumberTarget(78)]
   public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
   [FieldNumberTarget(78)]
-  public class AllocsClass
+  public class AllocsClass : FixMessageComponent<AllocsClass>
   {    
     [FieldNumber(79)]    
     [RequiredField]
@@ -144,7 +144,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
     [FieldNumberTarget(136)]
     public ICollection<MiscFeesClass> MiscFeesCollection { get; set; } = new List<MiscFeesClass>();
     [FieldNumberTarget(136)]
-    public class MiscFeesClass
+    public class MiscFeesClass : FixMessageComponent<MiscFeesClass>
     {    
       [FieldNumber(137)]
       public Amt MiscFeeAmt { get; set; }
@@ -173,7 +173,7 @@ public class AllocationMessage : FixMessage<AllocationMessage>
   [FieldNumberTarget(124)]
   public ICollection<ExecsClass> ExecsCollection { get; set; } = new List<ExecsClass>();
   [FieldNumberTarget(124)]
-  public class ExecsClass
+  public class ExecsClass : FixMessageComponent<ExecsClass>
   {    
     [FieldNumber(32)]
     public Quantity LastShares { get; set; }

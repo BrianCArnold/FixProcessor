@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("8")]
-public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
+public class ExecutionReportMessage : FixMessageComponent<ExecutionReportMessage>
 {
     
   [FieldNumber(37)]    
@@ -66,7 +66,7 @@ public class ExecutionReportMessage : FixMessage<ExecutionReportMessage>
   [FieldNumberTarget(382)]
   public ICollection<ContraBrokersClass> ContraBrokersCollection { get; set; } = new List<ContraBrokersClass>();
   [FieldNumberTarget(382)]
-  public class ContraBrokersClass
+  public class ContraBrokersClass : FixMessageComponent<ContraBrokersClass>
   {    
     [FieldNumber(375)]
     public FixString ContraBroker { get; set; }

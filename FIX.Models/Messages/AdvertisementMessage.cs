@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("7")]
-public class AdvertisementMessage : FixMessage<AdvertisementMessage>
+public class AdvertisementMessage : FixMessageComponent<AdvertisementMessage>
 {
     
   [FieldNumber(2)]    

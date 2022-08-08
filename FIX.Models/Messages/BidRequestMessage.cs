@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("k")]
-public class BidRequestMessage : FixMessage<BidRequestMessage>
+public class BidRequestMessage : FixMessageComponent<BidRequestMessage>
 {
     
   [FieldNumber(391)]    
@@ -53,7 +53,7 @@ public class BidRequestMessage : FixMessage<BidRequestMessage>
   [FieldNumberTarget(398)]
   public ICollection<BidDescriptorsClass> BidDescriptorsCollection { get; set; } = new List<BidDescriptorsClass>();
   [FieldNumberTarget(398)]
-  public class BidDescriptorsClass
+  public class BidDescriptorsClass : FixMessageComponent<BidDescriptorsClass>
   {    
     [FieldNumber(399)]
     public FixInt BidDescriptorType { get; set; }
@@ -96,7 +96,7 @@ public class BidRequestMessage : FixMessage<BidRequestMessage>
   [FieldNumberTarget(420)]
   public ICollection<BidComponentsClass> BidComponentsCollection { get; set; } = new List<BidComponentsClass>();
   [FieldNumberTarget(420)]
-  public class BidComponentsClass
+  public class BidComponentsClass : FixMessageComponent<BidComponentsClass>
   {    
     [FieldNumber(66)]
     public FixString ListID { get; set; }

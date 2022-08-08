@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("S")]
-public class QuoteMessage : FixMessage<QuoteMessage>
+public class QuoteMessage : FixMessageComponent<QuoteMessage>
 {
     
   [FieldNumber(117)]    

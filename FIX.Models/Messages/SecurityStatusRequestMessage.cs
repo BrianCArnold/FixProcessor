@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("e")]
-public class SecurityStatusRequestMessage : FixMessage<SecurityStatusRequestMessage>
+public class SecurityStatusRequestMessage : FixMessageComponent<SecurityStatusRequestMessage>
 {
     
   [FieldNumber(324)]    

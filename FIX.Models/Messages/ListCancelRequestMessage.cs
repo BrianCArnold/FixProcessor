@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("K")]
-public class ListCancelRequestMessage : FixMessage<ListCancelRequestMessage>
+public class ListCancelRequestMessage : FixMessageComponent<ListCancelRequestMessage>
 {
     
   [FieldNumber(66)]    

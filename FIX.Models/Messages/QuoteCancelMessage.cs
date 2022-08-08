@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("Z")]
-public class QuoteCancelMessage : FixMessage<QuoteCancelMessage>
+public class QuoteCancelMessage : FixMessageComponent<QuoteCancelMessage>
 {
     
   [FieldNumber(117)]    
@@ -20,7 +20,7 @@ public class QuoteCancelMessage : FixMessage<QuoteCancelMessage>
   [FieldNumberTarget(295)]
   public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
   [FieldNumberTarget(295)]
-  public class QuoteEntriesClass
+  public class QuoteEntriesClass : FixMessageComponent<QuoteEntriesClass>
   {    
     [FieldNumber(55)]    
     [RequiredField]

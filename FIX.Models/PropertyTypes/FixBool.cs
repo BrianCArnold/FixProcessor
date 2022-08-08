@@ -19,4 +19,8 @@ public class FixBool : IFixType
     {
         return internalValue ? bool.TrueString : bool.FalseString;
     }
+    public static implicit operator bool(FixBool value)
+    {
+        return value.Value;
+    }
 }

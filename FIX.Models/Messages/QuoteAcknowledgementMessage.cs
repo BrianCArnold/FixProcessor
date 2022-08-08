@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("b")]
-public class QuoteAcknowledgementMessage : FixMessage<QuoteAcknowledgementMessage>
+public class QuoteAcknowledgementMessage : FixMessageComponent<QuoteAcknowledgementMessage>
 {
     
   [FieldNumber(297)]    
@@ -33,7 +33,7 @@ public class QuoteAcknowledgementMessage : FixMessage<QuoteAcknowledgementMessag
   [FieldNumberTarget(296)]
   public ICollection<QuoteSetsClass> QuoteSetsCollection { get; set; } = new List<QuoteSetsClass>();
   [FieldNumberTarget(296)]
-  public class QuoteSetsClass
+  public class QuoteSetsClass : FixMessageComponent<QuoteSetsClass>
   {    
     [FieldNumber(302)]
     public FixString QuoteSetID { get; set; }
@@ -105,7 +105,7 @@ public class QuoteAcknowledgementMessage : FixMessage<QuoteAcknowledgementMessag
     [FieldNumberTarget(295)]
     public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
     [FieldNumberTarget(295)]
-    public class QuoteEntriesClass
+    public class QuoteEntriesClass : FixMessageComponent<QuoteEntriesClass>
     {    
       [FieldNumber(299)]
       public FixString QuoteEntryID { get; set; }

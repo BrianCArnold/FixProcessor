@@ -7,7 +7,7 @@ export const typeMap: { [key: string]: string } = {
     'Percentage': 'Percentage',
     'Price': 'Price',
     'PriceOffset': 'PriceOffset',
-    'Qty': 'Qty',
+    'Qty': 'Quantity',
     'int': 'FixInt',
     'DayOfMonth': 'DayOfMonth',
     'Length': 'Length',
@@ -26,5 +26,5 @@ export const typeMap: { [key: string]: string } = {
     'UTCTimeOnly': 'UTCTimeOnly',
     'UTCTimeStamp': 'UTCTimeStamp',
     'UTCTimestamp': 'UTCTimeStamp',
-    'Quantity': 'Qty'
+    'Quantity': 'Quantity'
 };

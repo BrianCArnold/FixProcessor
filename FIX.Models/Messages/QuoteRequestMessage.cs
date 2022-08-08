@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("R")]
-public class QuoteRequestMessage : FixMessage<QuoteRequestMessage>
+public class QuoteRequestMessage : FixMessageComponent<QuoteRequestMessage>
 {
     
   [FieldNumber(131)]    
@@ -16,7 +16,7 @@ public class QuoteRequestMessage : FixMessage<QuoteRequestMessage>
   [FieldNumberTarget(146)]
   public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
-  public class RelatedSymClass
+  public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
   {    
     [FieldNumber(55)]    
     [RequiredField]

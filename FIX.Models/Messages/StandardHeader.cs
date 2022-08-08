@@ -1,6 +1,6 @@
 namespace FIX.Models;
 
-public class StandardHeader : FixMessage<StandardHeader>
+public class StandardHeader : FixMessageComponent<StandardHeader>
 {
     
   [FieldNumber(8)]    

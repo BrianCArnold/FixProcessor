@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("3")]
-public class RejectMessage : FixMessage<RejectMessage>
+public class RejectMessage : FixMessageComponent<RejectMessage>
 {
     
   [FieldNumber(45)]    

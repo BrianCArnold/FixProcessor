@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("W")]
-public class MarketDataSnapshotFullRefreshMessage : FixMessage<MarketDataSnapshotFullRefreshMessage>
+public class MarketDataSnapshotFullRefreshMessage : FixMessageComponent<MarketDataSnapshotFullRefreshMessage>
 {
     
   [FieldNumber(55)]    
@@ -16,7 +16,7 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessage<MarketDataSnapsho
   [FieldNumberTarget(268)]
   public ICollection<MDEntriesClass> MDEntriesCollection { get; set; } = new List<MDEntriesClass>();
   [FieldNumberTarget(268)]
-  public class MDEntriesClass
+  public class MDEntriesClass : FixMessageComponent<MDEntriesClass>
   {    
     [FieldNumber(269)]    
     [RequiredField]

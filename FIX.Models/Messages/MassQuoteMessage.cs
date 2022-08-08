@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("i")]
-public class MassQuoteMessage : FixMessage<MassQuoteMessage>
+public class MassQuoteMessage : FixMessageComponent<MassQuoteMessage>
 {
     
   [FieldNumber(117)]    
@@ -16,7 +16,7 @@ public class MassQuoteMessage : FixMessage<MassQuoteMessage>
   [FieldNumberTarget(296)]
   public ICollection<QuoteSetsClass> QuoteSetsCollection { get; set; } = new List<QuoteSetsClass>();
   [FieldNumberTarget(296)]
-  public class QuoteSetsClass
+  public class QuoteSetsClass : FixMessageComponent<QuoteSetsClass>
   {    
     [FieldNumber(302)]    
     [RequiredField]
@@ -38,7 +38,7 @@ public class MassQuoteMessage : FixMessage<MassQuoteMessage>
     [FieldNumberTarget(295)]
     public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
     [FieldNumberTarget(295)]
-    public class QuoteEntriesClass
+    public class QuoteEntriesClass : FixMessageComponent<QuoteEntriesClass>
     {    
       [FieldNumber(299)]    
       [RequiredField]

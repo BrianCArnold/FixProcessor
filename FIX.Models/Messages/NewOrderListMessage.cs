@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("E")]
-public class NewOrderListMessage : FixMessage<NewOrderListMessage>
+public class NewOrderListMessage : FixMessageComponent<NewOrderListMessage>
 {
     
   [FieldNumber(66)]    
@@ -24,7 +24,7 @@ public class NewOrderListMessage : FixMessage<NewOrderListMessage>
   [FieldNumberTarget(73)]
   public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
-  public class OrdersClass
+  public class OrdersClass : FixMessageComponent<OrdersClass>
   {    
     [FieldNumber(11)]    
     [RequiredField]
@@ -61,7 +61,7 @@ public class NewOrderListMessage : FixMessage<NewOrderListMessage>
     [FieldNumberTarget(78)]
     public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
     [FieldNumberTarget(78)]
-    public class AllocsClass
+    public class AllocsClass : FixMessageComponent<AllocsClass>
     {    
       [FieldNumber(79)]
       public FixString AllocAccount { get; set; }
@@ -98,7 +98,7 @@ public class NewOrderListMessage : FixMessage<NewOrderListMessage>
     [FieldNumberTarget(386)]
     public ICollection<TradingSessionsClass> TradingSessionsCollection { get; set; } = new List<TradingSessionsClass>();
     [FieldNumberTarget(386)]
-    public class TradingSessionsClass
+    public class TradingSessionsClass : FixMessageComponent<TradingSessionsClass>
     {    
       [FieldNumber(336)]
       public FixString TradingSessionID { get; set; }

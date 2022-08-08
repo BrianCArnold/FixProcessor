@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("g")]
-public class TradingSessionStatusRequestMessage : FixMessage<TradingSessionStatusRequestMessage>
+public class TradingSessionStatusRequestMessage : FixMessageComponent<TradingSessionStatusRequestMessage>
 {
     
   [FieldNumber(335)]    

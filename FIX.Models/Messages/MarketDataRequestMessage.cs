@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("V")]
-public class MarketDataRequestMessage : FixMessage<MarketDataRequestMessage>
+public class MarketDataRequestMessage : FixMessageComponent<MarketDataRequestMessage>
 {
     
   [FieldNumber(262)]    
@@ -24,7 +24,7 @@ public class MarketDataRequestMessage : FixMessage<MarketDataRequestMessage>
   [FieldNumberTarget(267)]
   public ICollection<MDEntryTypesClass> MDEntryTypesCollection { get; set; } = new List<MDEntryTypesClass>();
   [FieldNumberTarget(267)]
-  public class MDEntryTypesClass
+  public class MDEntryTypesClass : FixMessageComponent<MDEntryTypesClass>
   {    
     [FieldNumber(269)]    
     [RequiredField]
@@ -39,7 +39,7 @@ public class MarketDataRequestMessage : FixMessage<MarketDataRequestMessage>
   [FieldNumberTarget(146)]
   public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
-  public class RelatedSymClass
+  public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
   {    
     [FieldNumber(55)]    
     [RequiredField]

@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("4")]
-public class SequenceResetMessage : FixMessage<SequenceResetMessage>
+public class SequenceResetMessage : FixMessageComponent<SequenceResetMessage>
 {
     
   [FieldNumber(36)]    

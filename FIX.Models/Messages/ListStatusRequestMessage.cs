@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("M")]
-public class ListStatusRequestMessage : FixMessage<ListStatusRequestMessage>
+public class ListStatusRequestMessage : FixMessageComponent<ListStatusRequestMessage>
 {
     
   [FieldNumber(66)]    

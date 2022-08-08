@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("N")]
-public class ListStatusMessage : FixMessage<ListStatusMessage>
+public class ListStatusMessage : FixMessageComponent<ListStatusMessage>
 {
     
   [FieldNumber(66)]    
@@ -36,7 +36,7 @@ public class ListStatusMessage : FixMessage<ListStatusMessage>
   [FieldNumberTarget(73)]
   public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
   [FieldNumberTarget(73)]
-  public class OrdersClass
+  public class OrdersClass : FixMessageComponent<OrdersClass>
   {    
     [FieldNumber(11)]    
     [RequiredField]

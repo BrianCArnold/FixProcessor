@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("l")]
-public class BidResponseMessage : FixMessage<BidResponseMessage>
+public class BidResponseMessage : FixMessageComponent<BidResponseMessage>
 {
     
   [FieldNumber(420)]    
@@ -12,7 +12,7 @@ public class BidResponseMessage : FixMessage<BidResponseMessage>
   [FieldNumberTarget(420)]
   public ICollection<BidComponentsClass> BidComponentsCollection { get; set; } = new List<BidComponentsClass>();
   [FieldNumberTarget(420)]
-  public class BidComponentsClass
+  public class BidComponentsClass : FixMessageComponent<BidComponentsClass>
   {    
     [FieldNumber(12)]    
     [RequiredField]

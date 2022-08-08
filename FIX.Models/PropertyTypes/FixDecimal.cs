@@ -11,4 +11,8 @@ public class FixDecimal : IFixType
         internalValue = decimal.Parse(strValue);
     }
     public Decimal Value => internalValue;
+    public static implicit operator Decimal(FixDecimal value)
+    {
+        return value.Value;
+    }
 }

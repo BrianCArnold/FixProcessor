@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("1")]
-public class TestRequestMessage : FixMessage<TestRequestMessage>
+public class TestRequestMessage : FixMessageComponent<TestRequestMessage>
 {
     
   [FieldNumber(112)]    

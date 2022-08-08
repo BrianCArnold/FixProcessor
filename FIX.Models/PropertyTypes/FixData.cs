@@ -12,4 +12,8 @@ public class FixData : IFixType
     {
         return Convert.ToBase64String(this.internalValue);
     }
+    public static implicit operator byte[](FixData value)
+    {
+        return value.Value;
+    }
 }

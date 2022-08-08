@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("m")]
-public class ListStrikePriceMessage : FixMessage<ListStrikePriceMessage>
+public class ListStrikePriceMessage : FixMessageComponent<ListStrikePriceMessage>
 {
     
   [FieldNumber(66)]    
@@ -20,7 +20,7 @@ public class ListStrikePriceMessage : FixMessage<ListStrikePriceMessage>
   [FieldNumberTarget(428)]
   public ICollection<StrikesClass> StrikesCollection { get; set; } = new List<StrikesClass>();
   [FieldNumberTarget(428)]
-  public class StrikesClass
+  public class StrikesClass : FixMessageComponent<StrikesClass>
   {    
     [FieldNumber(55)]    
     [RequiredField]

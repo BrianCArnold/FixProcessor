@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("6")]
-public class IndicationofInterestMessage : FixMessage<IndicationofInterestMessage>
+public class IndicationofInterestMessage : FixMessageComponent<IndicationofInterestMessage>
 {
     
   [FieldNumber(23)]    
@@ -103,7 +103,7 @@ public class IndicationofInterestMessage : FixMessage<IndicationofInterestMessag
   [FieldNumberTarget(199)]
   public ICollection<IOIQualifiersClass> IOIQualifiersCollection { get; set; } = new List<IOIQualifiersClass>();
   [FieldNumberTarget(199)]
-  public class IOIQualifiersClass
+  public class IOIQualifiersClass : FixMessageComponent<IOIQualifiersClass>
   {    
     [FieldNumber(104)]
     public FixChar IOIQualifier { get; set; }
@@ -131,7 +131,7 @@ public class IndicationofInterestMessage : FixMessage<IndicationofInterestMessag
   [FieldNumberTarget(215)]
   public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
   [FieldNumberTarget(215)]
-  public class RoutingIDsClass
+  public class RoutingIDsClass : FixMessageComponent<RoutingIDsClass>
   {    
     [FieldNumber(216)]
     public FixInt RoutingType { get; set; }

@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("H")]
-public class OrderStatusRequestMessage : FixMessage<OrderStatusRequestMessage>
+public class OrderStatusRequestMessage : FixMessageComponent<OrderStatusRequestMessage>
 {
     
   [FieldNumber(11)]    

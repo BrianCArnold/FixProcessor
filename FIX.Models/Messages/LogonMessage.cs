@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("A")]
-public class LogonMessage : FixMessage<LogonMessage>
+public class LogonMessage : FixMessageComponent<LogonMessage>
 {
     
   [FieldNumber(98)]    
@@ -31,7 +31,7 @@ public class LogonMessage : FixMessage<LogonMessage>
   [FieldNumberTarget(384)]
   public ICollection<MsgTypesClass> MsgTypesCollection { get; set; } = new List<MsgTypesClass>();
   [FieldNumberTarget(384)]
-  public class MsgTypesClass
+  public class MsgTypesClass : FixMessageComponent<MsgTypesClass>
   {    
     [FieldNumber(372)]
     public FixString RefMsgType { get; set; }

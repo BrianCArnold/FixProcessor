@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("X")]
-public class MarketDataIncrementalRefreshMessage : FixMessage<MarketDataIncrementalRefreshMessage>
+public class MarketDataIncrementalRefreshMessage : FixMessageComponent<MarketDataIncrementalRefreshMessage>
 {
     
   [FieldNumber(268)]    
@@ -12,7 +12,7 @@ public class MarketDataIncrementalRefreshMessage : FixMessage<MarketDataIncremen
   [FieldNumberTarget(268)]
   public ICollection<MDEntriesClass> MDEntriesCollection { get; set; } = new List<MDEntriesClass>();
   [FieldNumberTarget(268)]
-  public class MDEntriesClass
+  public class MDEntriesClass : FixMessageComponent<MDEntriesClass>
   {    
     [FieldNumber(279)]    
     [RequiredField]

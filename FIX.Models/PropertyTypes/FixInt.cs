@@ -9,4 +9,8 @@ public class FixInt : IFixType
         internalValue = long.Parse(strValue);
     }
     public long Value => internalValue;
+    public static implicit operator long(FixInt value)
+    {
+        return value.Value;
+    }
 }

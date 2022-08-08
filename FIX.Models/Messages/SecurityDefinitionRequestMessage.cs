@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("c")]
-public class SecurityDefinitionRequestMessage : FixMessage<SecurityDefinitionRequestMessage>
+public class SecurityDefinitionRequestMessage : FixMessageComponent<SecurityDefinitionRequestMessage>
 {
     
   [FieldNumber(320)]    
@@ -91,7 +91,7 @@ public class SecurityDefinitionRequestMessage : FixMessage<SecurityDefinitionReq
   [FieldNumberTarget(146)]
   public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
   [FieldNumberTarget(146)]
-  public class RelatedSymClass
+  public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
   {    
     [FieldNumber(311)]
     public FixString UnderlyingSymbol { get; set; }

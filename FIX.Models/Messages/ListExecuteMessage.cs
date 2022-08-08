@@ -1,7 +1,7 @@
 namespace FIX.Models;
 
 [MessageCode("L")]
-public class ListExecuteMessage : FixMessage<ListExecuteMessage>
+public class ListExecuteMessage : FixMessageComponent<ListExecuteMessage>
 {
     
   [FieldNumber(66)]    
