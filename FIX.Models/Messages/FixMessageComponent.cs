@@ -10,10 +10,13 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
         
     }
     public Dictionary<uint, FixData> CustomFields { get; set; } = new Dictionary<uint, FixData>();
+    private ICollection<uint> processedFields = new HashSet<uint>();
     private static Dictionary<Type, Dictionary<uint, PropertyInfo>> TypeProperties { get; set; } = new Dictionary<Type, Dictionary<uint, PropertyInfo>>();
+    private static Dictionary<Type, IEnumerable<uint>> TypeRequiredProperties { get; set; } = new Dictionary<Type, IEnumerable<uint>>();
     private static Dictionary<Type, Dictionary<uint, PropertyInfo>> TypeCollectionProperties { get; set; } = new Dictionary<Type, Dictionary<uint, PropertyInfo>>();
     private static Dictionary<Type, bool> TypePropertiesPopulated { get; set; } = new Dictionary<Type, bool>();
     private static Dictionary<Type, bool> TypeCollectionPropertiesPopulated { get; set; } = new Dictionary<Type, bool>();
+    private static Dictionary<Type, bool> TypeRequiredPropertiesPopulated { get; set; } = new Dictionary<Type, bool>();
     
     private static Dictionary<uint, PropertyInfo> GetCollectionProperties(Type type)
     {
@@ -36,11 +39,20 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
         }
         return TypeProperties[type];
     }
+    private static IEnumerable<uint> GetRequiredProperties(Type type)
+    {
+        if (!TypeRequiredProperties.ContainsKey(type))
+        {
+            var properties = type.GetProperties();
+            TypeRequiredProperties.Add(type, properties.Where(p => p.GetCustomAttribute<RequiredFieldAttribute>() != null).Select(p => p.GetCustomAttribute<FieldNumberAttribute>().FieldNumber));
+            TypeRequiredPropertiesPopulated.Add(type, true);
+        }
+        return TypeRequiredProperties[type];
+    }
     public virtual bool PopulateMessageFields(FixStreamFieldQueue fields)
     {
         var messageProperties = GetProperties(typeof(TMessage));
         var collectionProperties = GetCollectionProperties(typeof(TMessage));
-        var processedFields = new HashSet<uint>();
         while (fields.Fields.Any())
         {
             if (processedFields.Contains(fields.Fields.Peek().FieldNumber))
@@ -87,6 +99,33 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
             }
         }
         return true;
+    }
+    public virtual IEnumerable<ValidityMessage> GetStatus()
+    {
+        var requiredProperties = GetRequiredProperties(typeof(TMessage));
+        var collectionProperties = GetCollectionProperties(typeof(TMessage));
+        foreach (var fieldId in requiredProperties)
+        {
+            if (!processedFields.Contains(fieldId))
+            {
+                yield return new ValidityMessage(MessageLevel.Error, $"Required field {fieldId} is missing.");
+            }
+        }
+        foreach (var property in collectionProperties)
+        {
+            var collection = property.Value.GetValue(this);
+            if (collection is IEnumerable<IFixMessageComponent> components)
+            {
+                foreach (var item in components)
+                {
+                    foreach (var status in item.GetStatus())
+                    {
+                        yield return status;
+                    }
+                }
+            }
+        }
+        yield break;
     }
 }
 
