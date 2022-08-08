@@ -61,10 +61,18 @@ public class FixStreamFieldQueue : IDisposable
             var fieldBytes = ReadUntilSOH();
             if (fieldBytes.Length > 0)
             {
-                var field = new FixField(fieldBytes);
-                if (field.FieldNumber != 10)
+                FixField field;
+                try 
                 {
-                    checkSum += fieldBytes.Aggregate(0u, (c,n) => c + n) + (treatDelimiterAsSOHForChecksum ? 1u : (ushort)SOHChar);
+                    field = new FixField(fieldBytes);
+                    if (field.FieldNumber != 10)
+                    {
+                        checkSum += fieldBytes.Aggregate(0u, (c,n) => c + n) + (treatDelimiterAsSOHForChecksum ? 1u : (ushort)SOHChar);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    break;
                 }
                 yield return field;
             }

@@ -5,9 +5,29 @@ using FIX.Models;
 
 namespace FIX.Processor;
 
-public static class ProcessStream
+public class MessageMediator
 {
-    public static IEnumerable<Stream> FileMessageStream(Options options)
+    private readonly ProcessOptions options;
+    private readonly FixMessageParser messageParser;
+    private int messageNum = 0;
+    private readonly Dictionary<string, ICollection<decimal>> accountPrices = new Dictionary<string, ICollection<decimal>>();
+    private readonly List<FixMessage> messages = new List<FixMessage>();
+    private int errCount = 0;
+
+    public MessageMediator(ProcessOptions options)
+    {
+        this.options = options;
+
+        this.messageParser = new FixMessageParser(new MessageParserOptions
+        {
+            TreatDelimiterAsSOHForChecksum = options.TreatDelimiterAsSOHForChecksum,
+            Delimiter = options.Delimiter,
+            DisableChecksum = options.DisableChecksum,
+            DisableSequenceCheck = options.DisableSequenceCheck,
+            HideErrors = options.HideErrors
+        });
+    }
+    private IEnumerable<Stream> FileMessageStream()
     {
         var file = new FileInfo(options.File);
         if (!file.Exists)
@@ -24,7 +44,7 @@ public static class ProcessStream
             Thread.Sleep(options.WaitTime);
         }
     }
-    public static IEnumerable<Stream> ConsoleMessageStream(Options options)
+    private IEnumerable<Stream> ConsoleMessageStream()
     {
         Console.WriteLine("Enter one message per line. Press Ctrl+C or enter an empty line to quit.");
         while (true)
@@ -37,99 +57,86 @@ public static class ProcessStream
             Thread.Sleep(options.WaitTime);
         }
     }
-    public static int Execute(Options options)
+    private void ProcessMessageStream(Stream messageStream)
     {
-        MessageParserOptions parserOptions = new MessageParserOptions
+        var defColor = ConsoleColor.Gray;
+        if (options.Verbose)
         {
-            TreatDelimiterAsSOHForChecksum = options.TreatDelimiterAsSOHForChecksum,
-            Delimiter = options.Delimiter,
-            DisableChecksum = options.DisableChecksum,
-            DisableSequenceCheck = options.DisableSequenceCheck,
-            HideErrors = options.HideErrors
-        };
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Processing message #{messageNum}");
+            Console.ForegroundColor = defColor;
+        }
+        var message = messageParser.ParseFixMessage(messageStream);
 
-        var messageParser = new FixMessageParser(parserOptions);
+        if (!message.ValidityMessages.Any(m => m.Level == MessageLevel.Error))
+        {//No errors, it counts.
 
-        ConsoleColor defColor = Console.ForegroundColor;
+            messages.Add(message);
+            if (message.Body is NewOrderSingleMessage orderSingleMessage)
+            {
+                if (!accountPrices.ContainsKey(orderSingleMessage.Account))
+                {
+                    accountPrices[orderSingleMessage.Account] = new List<decimal>();
+                }
+                accountPrices[orderSingleMessage.Account].Add(orderSingleMessage.Price);
+                
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Out  .WriteLine($"Successfully Processed message #{messageNum}, MessageType: {message.Header.MsgType.Value}, SeqNum: {message.Header.MsgSeqNum.Value}");
 
-        IEnumerable<Stream> messageStreamEnumerable;
-
-        if (options.Stdin)
-        {
-            messageStreamEnumerable = ConsoleMessageStream(options);
         }
         else
         {
-            messageStreamEnumerable = FileMessageStream(options);
+            errCount++;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Error.WriteLine($"Error(s) in Processing message #{messageNum}, MessageType: {message.Header.MsgType.Value}, SeqNum: {message.Header.MsgSeqNum.Value}");
         }
-        int messageNum = 0;
-        Dictionary<string, ICollection<decimal>> accountPrices = new Dictionary<string, ICollection<decimal>>();
-        List<FixMessage> messages = new List<FixMessage>();
-        int errCount = 0;
+        foreach (var parsingMessage in message.ValidityMessages)
+        {
+            switch (parsingMessage.Level)
+            {
+                case MessageLevel.Error:
+                    if (!options.HideErrors)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Error.WriteLine("  " + parsingMessage.Message);
+                    }
+                    break;
+                case MessageLevel.Warning:
+                    if (!options.HideErrors)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Error.WriteLine("  " + parsingMessage.Message);
+                    }
+                    break;
+                case MessageLevel.Info:
+                    if (options.Verbose)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("  " + parsingMessage.Message);
+                    }
+                    break;
+            }
+            Console.ForegroundColor = defColor;
+        }
+        Console.ForegroundColor = defColor;
+
+    }
+    public int Execute()
+    {
+
+        ConsoleColor defColor = Console.ForegroundColor;
+
+        IEnumerable<Stream> messageStreamEnumerable = options.Source switch {
+            SourceType.File => FileMessageStream(),
+            SourceType.StdIn => ConsoleMessageStream(),
+            _ => throw new NotImplementedException()
+        };
+
         foreach (var messageStream in messageStreamEnumerable)
         {
             messageNum++;
-            if (options.Verbose)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Processing message #{messageNum}");
-                Console.ForegroundColor = defColor;
-            }
-            var message = messageParser.ParseFixMessage(messageStream);
-
-            if (!message.ValidityMessages.Any(m => m.Level == MessageLevel.Error))
-            {//No errors, it counts.
-
-                messages.Add(message);
-                if (message.Body is NewOrderSingleMessage orderSingleMessage)
-                {
-                    if (!accountPrices.ContainsKey(orderSingleMessage.Account))
-                    {
-                        accountPrices[orderSingleMessage.Account] = new List<decimal>();
-                    }
-                    accountPrices[orderSingleMessage.Account].Add(orderSingleMessage.Price);
-                    
-                }
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Out  .WriteLine($"Successfully Processed message #{messageNum}, MessageType: {message.Header.MsgType.Value}, SeqNum: {message.Header.MsgSeqNum.Value}");
-
-            }
-            else
-            {
-                errCount++;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Error.WriteLine($"Error(s) in Processing message #{messageNum}, MessageType: {message.Header.MsgType.Value}, SeqNum: {message.Header.MsgSeqNum.Value}");
-            }
-            foreach (var parsingMessage in message.ValidityMessages)
-            {
-                switch (parsingMessage.Level)
-                {
-                    case MessageLevel.Error:
-                        if (!options.HideErrors)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Error.WriteLine("  " + parsingMessage.Message);
-                        }
-                        break;
-                    case MessageLevel.Warning:
-                        if (!options.HideErrors)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Error.WriteLine("  " + parsingMessage.Message);
-                        }
-                        break;
-                    case MessageLevel.Info:
-                        if (options.Verbose)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("  " + parsingMessage.Message);
-                        }
-                        break;
-                }
-                Console.ForegroundColor = defColor;
-            }
-            Console.ForegroundColor = defColor;
-
+            ProcessMessageStream(messageStream);
         }
         foreach (var key in accountPrices.Keys)
         {

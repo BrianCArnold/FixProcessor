@@ -3,10 +3,15 @@ using CommandLine.Text;
 using FIX.Models;
 using FIX.Processor;
 
-CommandLine.Parser.Default
+var parser = CommandLine.Parser.Default;
 
-    .ParseArguments<Options>(args)
-    
-    .MapResult(
-        (Options opts) => ProcessStream.Execute(opts),
-        errs => 1);
+var parseResult = parser.ParseArguments<ProcessOptions>(args);
+
+
+var result = parseResult.MapResult(
+    (ProcessOptions opts) => {
+        var messageMediator = new MessageMediator(opts);
+        return messageMediator.Execute();
+    },
+    errs => 1);
+
