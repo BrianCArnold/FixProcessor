@@ -36,15 +36,24 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
         }
         return TypeProperties[type];
     }
-    public virtual void PopulateMessageFields(FixStreamFieldQueue fields)
+    public virtual bool PopulateMessageFields(FixStreamFieldQueue fields)
     {
         var messageProperties = GetProperties(typeof(TMessage));
         var collectionProperties = GetCollectionProperties(typeof(TMessage));
+        var processedFields = new HashSet<uint>();
         while (fields.Fields.Any())
         {
+            if (processedFields.Contains(fields.Fields.Peek().FieldNumber))
+            {
+                // we already processed this one, so we should exit if this is a repeating group.
+                // If it's not a repeating group (i.e. it's the root), the processing of the trailer should 
+                // throw an error when it encounters something it doesn't expect.
+                return false;
+            }
             if (messageProperties.ContainsKey(fields.Fields.Peek().FieldNumber))
             {
                 var field = fields.Fields.Dequeue();
+                processedFields.Add(field.FieldNumber);
                 var property = messageProperties[field.FieldNumber];
                 var propertyValue = Activator.CreateInstance(property.PropertyType, field.Value);
                 property.SetValue(this, propertyValue);
@@ -67,6 +76,7 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
             else if (fields.Fields.Peek().FieldNumber >= 5000) 
             {//User Defined Tags
                 var customField = fields.Fields.Dequeue();
+                processedFields.Add(customField.FieldNumber);
                 var customFieldNum = customField.FieldNumber;
                 var customData = new FixData(customField.Value);
                 CustomFields.Add(customFieldNum, customData);
@@ -76,6 +86,7 @@ public abstract class FixMessageComponent<TMessage> : IFixMessageComponent
                 break;
             }
         }
+        return true;
     }
 }
 

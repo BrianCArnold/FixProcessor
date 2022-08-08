@@ -60,7 +60,7 @@ public class LogonMessageTests
         StandardTrailer trailer = new StandardTrailer();
         trailer.PopulateMessageFields(fieldQueue);
 
-        
+
         
         int.Parse(trailer.CheckSum.Value).Should().Be(fieldQueue.CheckSum);
     }

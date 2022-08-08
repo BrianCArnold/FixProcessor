@@ -34,16 +34,28 @@ public class FixMessageParser
         StandardHeader header = new StandardHeader();
         header.PopulateMessageFields(fieldQueue);
 
-        if (!messageConstructors.ContainsKey(header.MsgType.Value))
+        IFixMessageComponent body;
+        if (messageConstructors.ContainsKey(header.MsgType.Value))
         {
-            throw new Exception($"Message type {header.MsgType.Value} not supported");
+            body = messageConstructors[header.MsgType.Value]();
         }
-        var message = messageConstructors[header.MsgType.Value]();
-        message.PopulateMessageFields(fieldQueue);
-
+        else
+        {
+            body = new UnknownMessageComponent();
+        }
+        var successfullyProcessedBody = body.PopulateMessageFields(fieldQueue);
+        
+        if (!successfullyProcessedBody)
+        {
+            //Ran into some kind of processing issue, skip to the end.
+            while(fieldQueue.Fields.Peek().FieldNumber != 10)
+            {
+                fieldQueue.Fields.Dequeue();
+            }
+        }
         var trailer = new StandardTrailer();
         trailer.PopulateMessageFields(fieldQueue);
 
-        return new FixMessage(header, message, trailer, fieldQueue.CheckSum);
+        return new FixMessage(header, body, trailer, fieldQueue.CheckSum, successfullyProcessedBody);
     }
 }
