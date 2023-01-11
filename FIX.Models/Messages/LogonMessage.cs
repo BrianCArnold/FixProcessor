@@ -29,9 +29,9 @@ public class LogonMessage : FixMessageComponent<LogonMessage>
   public FixInt NoMsgTypes { get; set; }
 
   [FieldNumberTarget(384)]
-  public ICollection<MsgTypesClass> MsgTypesCollection { get; set; } = new List<MsgTypesClass>();
+  public ICollection<MsgTypesSubcomponent> MsgTypesCollection { get; set; } = new List<MsgTypesSubcomponent>();
   [FieldNumberTarget(384)]
-  public class MsgTypesClass : FixMessageComponent<MsgTypesClass>
+  public class MsgTypesSubcomponent : FixMessageComponent<MsgTypesSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(372)]

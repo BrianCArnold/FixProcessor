@@ -18,9 +18,9 @@ public class QuoteCancelMessage : FixMessageComponent<QuoteCancelMessage>
   public FixInt NoQuoteEntries { get; set; }
 
   [FieldNumberTarget(295)]
-  public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
+  public ICollection<QuoteEntriesSubcomponent> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesSubcomponent>();
   [FieldNumberTarget(295)]
-  public class QuoteEntriesClass : FixMessageComponent<QuoteEntriesClass>
+  public class QuoteEntriesSubcomponent : FixMessageComponent<QuoteEntriesSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(55)]    

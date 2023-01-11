@@ -101,9 +101,9 @@ public class IndicationofInterestMessage : FixMessageComponent<IndicationofInter
   public FixInt NoIOIQualifiers { get; set; }
 
   [FieldNumberTarget(199)]
-  public ICollection<IOIQualifiersClass> IOIQualifiersCollection { get; set; } = new List<IOIQualifiersClass>();
+  public ICollection<IOIQualifiersSubcomponent> IOIQualifiersCollection { get; set; } = new List<IOIQualifiersSubcomponent>();
   [FieldNumberTarget(199)]
-  public class IOIQualifiersClass : FixMessageComponent<IOIQualifiersClass>
+  public class IOIQualifiersSubcomponent : FixMessageComponent<IOIQualifiersSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(104)]
@@ -130,9 +130,9 @@ public class IndicationofInterestMessage : FixMessageComponent<IndicationofInter
   public FixInt NoRoutingIDs { get; set; }
 
   [FieldNumberTarget(215)]
-  public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
+  public ICollection<RoutingIDsSubcomponent> RoutingIDsCollection { get; set; } = new List<RoutingIDsSubcomponent>();
   [FieldNumberTarget(215)]
-  public class RoutingIDsClass : FixMessageComponent<RoutingIDsClass>
+  public class RoutingIDsSubcomponent : FixMessageComponent<RoutingIDsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(216)]

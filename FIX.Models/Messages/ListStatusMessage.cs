@@ -34,9 +34,9 @@ public class ListStatusMessage : FixMessageComponent<ListStatusMessage>
   public FixInt NoOrders { get; set; }
 
   [FieldNumberTarget(73)]
-  public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
+  public ICollection<OrdersSubcomponent> OrdersCollection { get; set; } = new List<OrdersSubcomponent>();
   [FieldNumberTarget(73)]
-  public class OrdersClass : FixMessageComponent<OrdersClass>
+  public class OrdersSubcomponent : FixMessageComponent<OrdersSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(11)]    

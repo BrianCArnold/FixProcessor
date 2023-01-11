@@ -18,9 +18,9 @@ public class ListStrikePriceMessage : FixMessageComponent<ListStrikePriceMessage
   public FixInt NoStrikes { get; set; }
 
   [FieldNumberTarget(428)]
-  public ICollection<StrikesClass> StrikesCollection { get; set; } = new List<StrikesClass>();
+  public ICollection<StrikesSubcomponent> StrikesCollection { get; set; } = new List<StrikesSubcomponent>();
   [FieldNumberTarget(428)]
-  public class StrikesClass : FixMessageComponent<StrikesClass>
+  public class StrikesSubcomponent : FixMessageComponent<StrikesSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(55)]    

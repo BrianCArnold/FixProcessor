@@ -51,9 +51,9 @@ public class BidRequestMessage : FixMessageComponent<BidRequestMessage>
   public FixInt NoBidDescriptors { get; set; }
 
   [FieldNumberTarget(398)]
-  public ICollection<BidDescriptorsClass> BidDescriptorsCollection { get; set; } = new List<BidDescriptorsClass>();
+  public ICollection<BidDescriptorsSubcomponent> BidDescriptorsCollection { get; set; } = new List<BidDescriptorsSubcomponent>();
   [FieldNumberTarget(398)]
-  public class BidDescriptorsClass : FixMessageComponent<BidDescriptorsClass>
+  public class BidDescriptorsSubcomponent : FixMessageComponent<BidDescriptorsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(399)]
@@ -95,9 +95,9 @@ public class BidRequestMessage : FixMessageComponent<BidRequestMessage>
   public FixInt NoBidComponents { get; set; }
 
   [FieldNumberTarget(420)]
-  public ICollection<BidComponentsClass> BidComponentsCollection { get; set; } = new List<BidComponentsClass>();
+  public ICollection<BidComponentsSubcomponent> BidComponentsCollection { get; set; } = new List<BidComponentsSubcomponent>();
   [FieldNumberTarget(420)]
-  public class BidComponentsClass : FixMessageComponent<BidComponentsClass>
+  public class BidComponentsSubcomponent : FixMessageComponent<BidComponentsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(66)]

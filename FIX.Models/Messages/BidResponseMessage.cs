@@ -10,9 +10,9 @@ public class BidResponseMessage : FixMessageComponent<BidResponseMessage>
   public FixInt NoBidComponents { get; set; }
 
   [FieldNumberTarget(420)]
-  public ICollection<BidComponentsClass> BidComponentsCollection { get; set; } = new List<BidComponentsClass>();
+  public ICollection<BidComponentsSubcomponent> BidComponentsCollection { get; set; } = new List<BidComponentsSubcomponent>();
   [FieldNumberTarget(420)]
-  public class BidComponentsClass : FixMessageComponent<BidComponentsClass>
+  public class BidComponentsSubcomponent : FixMessageComponent<BidComponentsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(12)]    

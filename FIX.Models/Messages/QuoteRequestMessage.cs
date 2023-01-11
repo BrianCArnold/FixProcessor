@@ -14,9 +14,9 @@ public class QuoteRequestMessage : FixMessageComponent<QuoteRequestMessage>
   public FixInt NoRelatedSym { get; set; }
 
   [FieldNumberTarget(146)]
-  public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
+  public ICollection<RelatedSymSubcomponent> RelatedSymCollection { get; set; } = new List<RelatedSymSubcomponent>();
   [FieldNumberTarget(146)]
-  public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
+  public class RelatedSymSubcomponent : FixMessageComponent<RelatedSymSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(55)]    

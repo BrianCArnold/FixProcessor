@@ -14,9 +14,9 @@ public class NewsMessage : FixMessageComponent<NewsMessage>
   public FixInt LinesOfText { get; set; }
 
   [FieldNumberTarget(33)]
-  public ICollection<LinesOfTextClass> LinesOfTextCollection { get; set; } = new List<LinesOfTextClass>();
+  public ICollection<LinesOfTextSubcomponent> LinesOfTextCollection { get; set; } = new List<LinesOfTextSubcomponent>();
   [FieldNumberTarget(33)]
-  public class LinesOfTextClass : FixMessageComponent<LinesOfTextClass>
+  public class LinesOfTextSubcomponent : FixMessageComponent<LinesOfTextSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(58)]    
@@ -47,9 +47,9 @@ public class NewsMessage : FixMessageComponent<NewsMessage>
   public FixInt NoRoutingIDs { get; set; }
 
   [FieldNumberTarget(215)]
-  public ICollection<RoutingIDsClass> RoutingIDsCollection { get; set; } = new List<RoutingIDsClass>();
+  public ICollection<RoutingIDsSubcomponent> RoutingIDsCollection { get; set; } = new List<RoutingIDsSubcomponent>();
   [FieldNumberTarget(215)]
-  public class RoutingIDsClass : FixMessageComponent<RoutingIDsClass>
+  public class RoutingIDsSubcomponent : FixMessageComponent<RoutingIDsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(216)]
@@ -64,9 +64,9 @@ public class NewsMessage : FixMessageComponent<NewsMessage>
   public FixInt NoRelatedSym { get; set; }
 
   [FieldNumberTarget(146)]
-  public ICollection<RelatedSymClass> RelatedSymCollection { get; set; } = new List<RelatedSymClass>();
+  public ICollection<RelatedSymSubcomponent> RelatedSymCollection { get; set; } = new List<RelatedSymSubcomponent>();
   [FieldNumberTarget(146)]
-  public class RelatedSymClass : FixMessageComponent<RelatedSymClass>
+  public class RelatedSymSubcomponent : FixMessageComponent<RelatedSymSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(46)]

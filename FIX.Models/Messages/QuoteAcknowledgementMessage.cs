@@ -31,9 +31,9 @@ public class QuoteAcknowledgementMessage : FixMessageComponent<QuoteAcknowledgem
   public FixInt NoQuoteSets { get; set; }
 
   [FieldNumberTarget(296)]
-  public ICollection<QuoteSetsClass> QuoteSetsCollection { get; set; } = new List<QuoteSetsClass>();
+  public ICollection<QuoteSetsSubcomponent> QuoteSetsCollection { get; set; } = new List<QuoteSetsSubcomponent>();
   [FieldNumberTarget(296)]
-  public class QuoteSetsClass : FixMessageComponent<QuoteSetsClass>
+  public class QuoteSetsSubcomponent : FixMessageComponent<QuoteSetsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(302)]
@@ -104,9 +104,9 @@ public class QuoteAcknowledgementMessage : FixMessageComponent<QuoteAcknowledgem
     public FixInt NoQuoteEntries { get; set; }
 
     [FieldNumberTarget(295)]
-    public ICollection<QuoteEntriesClass> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesClass>();
+    public ICollection<QuoteEntriesSubcomponent> QuoteEntriesCollection { get; set; } = new List<QuoteEntriesSubcomponent>();
     [FieldNumberTarget(295)]
-    public class QuoteEntriesClass : FixMessageComponent<QuoteEntriesClass>
+    public class QuoteEntriesSubcomponent : FixMessageComponent<QuoteEntriesSubcomponent>
     {
       protected override bool EmitErrorOnDuplicateField => false;    
       [FieldNumber(299)]

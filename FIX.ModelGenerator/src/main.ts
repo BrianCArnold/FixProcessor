@@ -179,8 +179,10 @@ puppeteer.launch().then(async (browser: puppeteer.Browser) => {
         messageDetails = JSON.parse(fs.readFileSync('./messages.json', 'utf8'));
     } else {
         messageDetails = [];
-        const messages = (await getMessages(browser)).concat([{code: null, name: 'StandardHeader', url: 'compBlock_StandardHeader.html', deprecated: false}, 
-        {code: null, name: 'StandardTrailer', url: 'compBlock_StandardTrailer.html', deprecated: false}]);
+        const messages = (await getMessages(browser)).concat([
+            {code: null, name: 'StandardHeader', url: 'compBlock_StandardHeader.html', deprecated: false}, 
+            {code: null, name: 'StandardTrailer', url: 'compBlock_StandardTrailer.html', deprecated: false}
+        ]);
         for (let i = 0; i < messages.length; i++) {
             const message = messages[i];
             //To prevent rate limiting, wait a bit between requests.
@@ -226,11 +228,13 @@ fileContent += `
 ${indentation}public ${type} ${t.name} { get; set; }
 `;
                 if (t.children.length > 0) {
+                    const cleanedName = t.name.replace(/^No/, '');
+                    const cleanClassName = cleanedName + 'Subcomponent'
                     fileContent += `
 ${indentation}[FieldNumberTarget(${t.id})]
-${indentation}public ICollection<${t.name.replace(/^No/, '')}Class> ${t.name.replace(/^No/, '')}Collection { get; set; } = new List<${t.name.replace(/^No/, '')}Class>();
+${indentation}public ICollection<${cleanClassName}> ${cleanedName}Collection { get; set; } = new List<${cleanClassName}>();
 ${indentation}[FieldNumberTarget(${t.id})]
-${indentation}public class ${t.name.replace(/^No/, '')}Class : FixMessageComponent<${t.name.replace(/^No/, '')}Class>
+${indentation}public class ${cleanClassName} : FixMessageComponent<${cleanClassName}>
 ${indentation}{
 ${indentation}  protected override bool EmitErrorOnDuplicateField => false;`;
                     processTags(t.children, indentLevel + 1);

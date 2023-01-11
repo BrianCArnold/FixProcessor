@@ -18,9 +18,9 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
   public FixInt NoOrders { get; set; }
 
   [FieldNumberTarget(73)]
-  public ICollection<OrdersClass> OrdersCollection { get; set; } = new List<OrdersClass>();
+  public ICollection<OrdersSubcomponent> OrdersCollection { get; set; } = new List<OrdersSubcomponent>();
   [FieldNumberTarget(73)]
-  public class OrdersClass : FixMessageComponent<OrdersClass>
+  public class OrdersSubcomponent : FixMessageComponent<OrdersSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(11)]    
@@ -66,9 +66,9 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
   public FixInt NoAllocs { get; set; }
 
   [FieldNumberTarget(78)]
-  public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
+  public ICollection<AllocsSubcomponent> AllocsCollection { get; set; } = new List<AllocsSubcomponent>();
   [FieldNumberTarget(78)]
-  public class AllocsClass : FixMessageComponent<AllocsClass>
+  public class AllocsSubcomponent : FixMessageComponent<AllocsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(79)]    
@@ -144,9 +144,9 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
     public FixInt NoMiscFees { get; set; }
 
     [FieldNumberTarget(136)]
-    public ICollection<MiscFeesClass> MiscFeesCollection { get; set; } = new List<MiscFeesClass>();
+    public ICollection<MiscFeesSubcomponent> MiscFeesCollection { get; set; } = new List<MiscFeesSubcomponent>();
     [FieldNumberTarget(136)]
-    public class MiscFeesClass : FixMessageComponent<MiscFeesClass>
+    public class MiscFeesSubcomponent : FixMessageComponent<MiscFeesSubcomponent>
     {
       protected override bool EmitErrorOnDuplicateField => false;    
       [FieldNumber(137)]
@@ -174,9 +174,9 @@ public class AllocationMessage : FixMessageComponent<AllocationMessage>
   public FixInt NoExecs { get; set; }
 
   [FieldNumberTarget(124)]
-  public ICollection<ExecsClass> ExecsCollection { get; set; } = new List<ExecsClass>();
+  public ICollection<ExecsSubcomponent> ExecsCollection { get; set; } = new List<ExecsSubcomponent>();
   [FieldNumberTarget(124)]
-  public class ExecsClass : FixMessageComponent<ExecsClass>
+  public class ExecsSubcomponent : FixMessageComponent<ExecsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(32)]

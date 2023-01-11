@@ -42,9 +42,9 @@ public class NewOrderSingleMessage : FixMessageComponent<NewOrderSingleMessage>
   public FixInt NoAllocs { get; set; }
 
   [FieldNumberTarget(78)]
-  public ICollection<AllocsClass> AllocsCollection { get; set; } = new List<AllocsClass>();
+  public ICollection<AllocsSubcomponent> AllocsCollection { get; set; } = new List<AllocsSubcomponent>();
   [FieldNumberTarget(78)]
-  public class AllocsClass : FixMessageComponent<AllocsClass>
+  public class AllocsSubcomponent : FixMessageComponent<AllocsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(79)]
@@ -77,9 +77,9 @@ public class NewOrderSingleMessage : FixMessageComponent<NewOrderSingleMessage>
   public FixInt NoTradingSessions { get; set; }
 
   [FieldNumberTarget(386)]
-  public ICollection<TradingSessionsClass> TradingSessionsCollection { get; set; } = new List<TradingSessionsClass>();
+  public ICollection<TradingSessionsSubcomponent> TradingSessionsCollection { get; set; } = new List<TradingSessionsSubcomponent>();
   [FieldNumberTarget(386)]
-  public class TradingSessionsClass : FixMessageComponent<TradingSessionsClass>
+  public class TradingSessionsSubcomponent : FixMessageComponent<TradingSessionsSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(336)]

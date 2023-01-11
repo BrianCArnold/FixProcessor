@@ -14,9 +14,9 @@ public class MarketDataSnapshotFullRefreshMessage : FixMessageComponent<MarketDa
   public FixInt NoMDEntries { get; set; }
 
   [FieldNumberTarget(268)]
-  public ICollection<MDEntriesClass> MDEntriesCollection { get; set; } = new List<MDEntriesClass>();
+  public ICollection<MDEntriesSubcomponent> MDEntriesCollection { get; set; } = new List<MDEntriesSubcomponent>();
   [FieldNumberTarget(268)]
-  public class MDEntriesClass : FixMessageComponent<MDEntriesClass>
+  public class MDEntriesSubcomponent : FixMessageComponent<MDEntriesSubcomponent>
   {
     protected override bool EmitErrorOnDuplicateField => false;    
     [FieldNumber(269)]    
